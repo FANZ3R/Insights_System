@@ -1,513 +1,16 @@
-# import streamlit as st
-# import json
-# import pandas as pd
-# from datetime import datetime
-# from pathlib import Path
-# import plotly.express as px
-# import plotly.graph_objects as go
-# from plotly.subplots import make_subplots
-
-# # Page config
-# st.set_page_config(
-#     page_title="Procurement AI Insights",
-#     page_icon="📊",
-#     layout="wide",
-#     initial_sidebar_state="expanded"
-# )
-
-# # Custom CSS for better UI
-# st.markdown("""
-# <style>
-#     .main-header {
-#         font-size: 3rem;
-#         font-weight: bold;
-#         background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-#         -webkit-background-clip: text;
-#         -webkit-text-fill-color: transparent;
-#         margin-bottom: 0.5rem;
-#     }
-#     .metric-card {
-#         background-color: #f0f2f6;
-#         padding: 1.5rem;
-#         border-radius: 0.5rem;
-#         border-left: 4px solid #667eea;
-#     }
-#     .insight-high {
-#         border-left: 4px solid #ff4b4b;
-#         background-color: #fff5f5;
-#         padding: 1rem;
-#         border-radius: 0.5rem;
-#         margin-bottom: 1rem;
-#     }
-#     .insight-medium {
-#         border-left: 4px solid #ffa500;
-#         background-color: #fff9f0;
-#         padding: 1rem;
-#         border-radius: 0.5rem;
-#         margin-bottom: 1rem;
-#     }
-#     .insight-low {
-#         border-left: 4px solid #00c853;
-#         background-color: #f0fff4;
-#         padding: 1rem;
-#         border-radius: 0.5rem;
-#         margin-bottom: 1rem;
-#     }
-#     .stTabs [data-baseweb="tab-list"] {
-#         gap: 2rem;
-#     }
-#     .stTabs [data-baseweb="tab"] {
-#         height: 3rem;
-#         padding-left: 2rem;
-#         padding-right: 2rem;
-#     }
-# </style>
-# """, unsafe_allow_html=True)
-
-# # Paths
-# PROCESSED_DATA_DIR = Path("data/processed")
-# RAW_DATA_DIR = Path("data/raw")
-
-# def load_all_insights(entity_type=None):
-#     """Load all processed insights from directory"""
-#     if not PROCESSED_DATA_DIR.exists():
-#         return []
-    
-#     pattern = f"{entity_type}_*_insights_*.json" if entity_type else "*_insights_*.json"
-#     files = list(PROCESSED_DATA_DIR.glob(pattern))
-    
-#     insights = []
-#     for file in files:
-#         try:
-#             with open(file, 'r') as f:
-#                 data = json.load(f)
-#                 insights.append(data)
-#         except Exception as e:
-#             st.error(f"Error loading {file.name}: {e}")
-    
-#     return insights
-
-# def get_entity_summary(insights_list):
-#     """Create summary dataframe from insights"""
-#     if not insights_list:
-#         return pd.DataFrame()
-    
-#     summaries = []
-#     for insight in insights_list:
-#         entity_type = insight.get('entity_type')
-#         entity_id = insight.get('entity_id')
-#         insights_count = insight.get('insights_count', 0)
-#         high_priority = insight.get('high_priority_count', 0)
-        
-#         # Get data period
-#         period = insight.get('data_period', {})
-        
-#         summaries.append({
-#             'Entity Type': entity_type.capitalize(),
-#             'Entity ID': entity_id,
-#             'Total Insights': insights_count,
-#             'High Priority': high_priority,
-#             'Period Start': period.get('start', 'N/A'),
-#             'Period End': period.get('end', 'N/A'),
-#             'Generated At': insight.get('generated_at', 'N/A')[:10]
-#         })
-    
-#     return pd.DataFrame(summaries)
-
-# def display_insight_card(insight, index):
-#     """Display a single insight as a styled card"""
-#     priority = insight.get('priority', 'medium')
-#     title = insight.get('title', 'Insight')
-#     observation = insight.get('observation', 'N/A')
-#     recommendation = insight.get('recommendation', 'N/A')
-#     metrics = insight.get('metrics', [])
-    
-#     # Priority badge
-#     priority_colors = {
-#         'high': '🔴',
-#         'medium': '🟡',
-#         'low': '🟢'
-#     }
-    
-#     badge = priority_colors.get(priority, '⚪')
-    
-#     with st.container():
-#         st.markdown(f"""
-#         <div class="insight-{priority}">
-#             <h4>{badge} {title}</h4>
-#         </div>
-#         """, unsafe_allow_html=True)
-        
-#         col1, col2 = st.columns([3, 1])
-        
-#         with col1:
-#             st.markdown("**📊 Observation:**")
-#             st.write(observation)
-            
-#             st.markdown("**💡 Recommendation:**")
-#             st.info(recommendation)
-        
-#         with col2:
-#             st.markdown("**Priority:**")
-#             st.write(priority.upper())
-            
-#             if metrics:
-#                 st.markdown("**Metrics:**")
-#                 for metric in metrics[:3]:
-#                     st.caption(f"• {metric}")
-
-# def create_insights_distribution_chart(insights_list):
-#     """Create chart showing insights distribution"""
-#     priority_counts = {'high': 0, 'medium': 0, 'low': 0}
-    
-#     for item in insights_list:
-#         for insight in item.get('insights', []):
-#             priority = insight.get('priority', 'medium')
-#             priority_counts[priority] = priority_counts.get(priority, 0) + 1
-    
-#     fig = go.Figure(data=[
-#         go.Bar(
-#             x=list(priority_counts.keys()),
-#             y=list(priority_counts.values()),
-#             marker_color=['#ff4b4b', '#ffa500', '#00c853'],
-#             text=list(priority_counts.values()),
-#             textposition='auto',
-#         )
-#     ])
-    
-#     fig.update_layout(
-#         title="Insights Priority Distribution",
-#         xaxis_title="Priority Level",
-#         yaxis_title="Count",
-#         showlegend=False,
-#         height=300
-#     )
-    
-#     return fig
-
-# def create_entity_comparison_chart(summary_df, entity_type):
-#     """Create comparison chart for entities"""
-#     if summary_df.empty:
-#         return None
-    
-#     fig = go.Figure()
-    
-#     fig.add_trace(go.Bar(
-#         x=summary_df['Entity ID'],
-#         y=summary_df['Total Insights'],
-#         name='Total Insights',
-#         marker_color='lightblue'
-#     ))
-    
-#     fig.add_trace(go.Bar(
-#         x=summary_df['Entity ID'],
-#         y=summary_df['High Priority'],
-#         name='High Priority',
-#         marker_color='salmon'
-#     ))
-    
-#     fig.update_layout(
-#         title=f"{entity_type.capitalize()} Insights Overview",
-#         xaxis_title=f"{entity_type.capitalize()} ID",
-#         yaxis_title="Count",
-#         barmode='group',
-#         height=400
-#     )
-    
-#     return fig
-
-# # Main App
-# def main():
-#     # Header
-#     st.markdown('<p class="main-header">📊 Procurement AI Insights</p>', unsafe_allow_html=True)
-#     st.markdown("**AI-powered insights for buyers and sellers**")
-#     st.markdown("---")
-    
-#     # Sidebar
-#     with st.sidebar:
-#         st.image("https://via.placeholder.com/150x50/667eea/FFFFFF?text=AI+Insights", use_container_width=True)
-        
-#         st.header("🎛️ Controls")
-        
-#         # Entity type selector
-#         entity_type = st.radio(
-#             "Select Entity Type",
-#             options=['All', 'Buyer', 'Seller'],
-#             horizontal=True
-#         )
-        
-#         entity_filter = None if entity_type == 'All' else entity_type.lower()
-        
-#         st.markdown("---")
-        
-#         # Refresh button
-#         if st.button("🔄 Refresh Data", type="primary", use_container_width=True):
-#             st.cache_data.clear()
-#             st.rerun()
-        
-#         st.markdown("---")
-        
-#         # Info
-#         st.info("💡 **Tip:** Select an entity from the table below to view detailed insights.")
-        
-#         st.markdown("---")
-#         st.caption("Powered by Claude AI")
-    
-#     # Load insights
-#     with st.spinner('Loading insights...'):
-#         insights_list = load_all_insights(entity_filter)
-    
-#     if not insights_list:
-#         st.warning("⚠️ No insights found. Please run the insights generation system first.")
-#         st.code("""
-# # Generate insights:
-# cd insights_system/src
-# python query_executor.py --entity buyer --id 534
-# python insights_generator.py --entity buyer --id 534
-#         """)
-#         st.stop()
-    
-#     # Summary metrics
-#     st.header("📈 Overview")
-    
-#     col1, col2, col3, col4 = st.columns(4)
-    
-#     total_entities = len(insights_list)
-#     total_insights = sum(item.get('insights_count', 0) for item in insights_list)
-#     high_priority_insights = sum(item.get('high_priority_count', 0) for item in insights_list)
-#     avg_insights_per_entity = total_insights / total_entities if total_entities > 0 else 0
-    
-#     with col1:
-#         st.metric(
-#             label="Total Entities",
-#             value=total_entities,
-#             delta=f"{entity_type if entity_type != 'All' else 'Mixed'}"
-#         )
-    
-#     with col2:
-#         st.metric(
-#             label="Total Insights",
-#             value=total_insights
-#         )
-    
-#     with col3:
-#         st.metric(
-#             label="High Priority",
-#             value=high_priority_insights,
-#             delta=f"{(high_priority_insights/total_insights*100):.1f}%" if total_insights > 0 else "0%"
-#         )
-    
-#     with col4:
-#         st.metric(
-#             label="Avg Insights/Entity",
-#             value=f"{avg_insights_per_entity:.1f}"
-#         )
-    
-#     st.markdown("---")
-    
-#     # Charts
-#     col1, col2 = st.columns(2)
-    
-#     with col1:
-#         # Priority distribution
-#         priority_chart = create_insights_distribution_chart(insights_list)
-#         st.plotly_chart(priority_chart, use_container_width=True)
-    
-#     with col2:
-#         # Entity comparison
-#         summary_df = get_entity_summary(insights_list)
-#         if not summary_df.empty:
-#             entity_chart = create_entity_comparison_chart(
-#                 summary_df, 
-#                 entity_type if entity_type != 'All' else 'entity'
-#             )
-#             if entity_chart:
-#                 st.plotly_chart(entity_chart, use_container_width=True)
-    
-#     st.markdown("---")
-    
-#     # Entity selector and details
-#     st.header("🔍 Entity Details")
-    
-#     # Summary table
-#     if not summary_df.empty:
-#         # Sort by high priority count
-#         summary_df_sorted = summary_df.sort_values('High Priority', ascending=False)
-        
-#         # Display table with selection
-#         st.dataframe(
-#             summary_df_sorted,
-#             use_container_width=True,
-#             hide_index=True
-#         )
-        
-#         # Entity selector
-#         selected_entity_id = st.selectbox(
-#             "Select Entity for Detailed View",
-#             options=summary_df['Entity ID'].tolist(),
-#             format_func=lambda x: f"{summary_df[summary_df['Entity ID']==x]['Entity Type'].values[0]} {x} - {summary_df[summary_df['Entity ID']==x]['Total Insights'].values[0]} insights ({summary_df[summary_df['Entity ID']==x]['High Priority'].values[0]} high priority)"
-#         )
-        
-#         # Get selected entity data
-#         selected_entity = next(
-#             (item for item in insights_list if item['entity_id'] == selected_entity_id),
-#             None
-#         )
-        
-#         if selected_entity:
-#             st.markdown("---")
-            
-#             # Entity header
-#             entity_type_label = selected_entity['entity_type'].capitalize()
-#             st.subheader(f"{entity_type_label} {selected_entity_id}")
-            
-#             # Metadata
-#             col1, col2, col3 = st.columns(3)
-            
-#             with col1:
-#                 period = selected_entity.get('data_period', {})
-#                 st.info(f"**Period:** {period.get('start', 'N/A')} to {period.get('end', 'N/A')}")
-            
-#             with col2:
-#                 generated = selected_entity.get('generated_at', 'N/A')
-#                 st.info(f"**Generated:** {generated[:10] if generated != 'N/A' else 'N/A'}")
-            
-#             with col3:
-#                 queries = selected_entity.get('raw_data_summary', {})
-#                 st.info(f"**Data Sources:** {len(queries)} queries")
-            
-#             # Data quality summary
-#             with st.expander("📊 Data Quality Summary", expanded=False):
-#                 queries_summary = selected_entity.get('raw_data_summary', {})
-                
-#                 if queries_summary:
-#                     quality_df = pd.DataFrame([
-#                         {
-#                             'Query': name,
-#                             'Description': info.get('description', 'N/A'),
-#                             'Records': info.get('result_count', 0)
-#                         }
-#                         for name, info in queries_summary.items()
-#                     ])
-#                     st.dataframe(quality_df, use_container_width=True, hide_index=True)
-#                 else:
-#                     st.write("No query summary available")
-            
-#             st.markdown("---")
-            
-#             # Insights tabs
-#             insights = selected_entity.get('insights', [])
-            
-#             if insights:
-#                 # Sort insights by priority
-#                 priority_order = {'high': 0, 'medium': 1, 'low': 2}
-#                 sorted_insights = sorted(
-#                     insights,
-#                     key=lambda x: priority_order.get(x.get('priority', 'medium'), 1)
-#                 )
-                
-#                 # Create tabs for different views
-#                 tab1, tab2, tab3 = st.tabs(["🎯 All Insights", "🔴 High Priority", "📋 Summary"])
-                
-#                 with tab1:
-#                     st.subheader("All AI-Generated Insights")
-#                     for idx, insight in enumerate(sorted_insights, 1):
-#                         display_insight_card(insight, idx)
-                
-#                 with tab2:
-#                     st.subheader("High Priority Insights")
-#                     high_priority = [i for i in sorted_insights if i.get('priority') == 'high']
-                    
-#                     if high_priority:
-#                         for idx, insight in enumerate(high_priority, 1):
-#                             display_insight_card(insight, idx)
-#                     else:
-#                         st.info("No high priority insights found")
-                
-#                 with tab3:
-#                     st.subheader("Insights Summary")
-                    
-#                     # Create summary table
-#                     summary_data = []
-#                     for insight in sorted_insights:
-#                         summary_data.append({
-#                             'Priority': insight.get('priority', 'medium').upper(),
-#                             'Title': insight.get('title', 'N/A'),
-#                             'Metrics': len(insight.get('metrics', []))
-#                         })
-                    
-#                     summary_table = pd.DataFrame(summary_data)
-#                     st.dataframe(summary_table, use_container_width=True, hide_index=True)
-                    
-#                     # Download button
-#                     json_data = json.dumps(selected_entity, indent=2)
-#                     st.download_button(
-#                         label="📥 Download Insights (JSON)",
-#                         data=json_data,
-#                         file_name=f"{entity_type_label.lower()}_{selected_entity_id}_insights.json",
-#                         mime="application/json",
-#                         use_container_width=True
-#                     )
-#             else:
-#                 st.warning("No insights available for this entity")
-    
-#     # Footer
-#     st.markdown("---")
-#     st.caption(f"Dashboard last updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-
-# if __name__ == "__main__":
-#     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import streamlit as st
 import json
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 import plotly.graph_objects as go
+import subprocess
+import time
 
 # Page config
 st.set_page_config(
     page_title="Procurement Insights Platform",
-    page_icon="chart_with_upwards_trend",
+    page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -612,6 +115,16 @@ st.markdown("""
         background-color: #c6f6d5;
         color: #22543d;
     }
+    .comparison-badge {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        border-radius: 3px;
+        font-size: 0.7rem;
+        font-weight: 500;
+        margin-left: 0.5rem;
+        background-color: #e6fffa;
+        color: #234e52;
+    }
     .section-divider {
         border-top: 2px solid #e2e8f0;
         margin: 2rem 0;
@@ -619,91 +132,119 @@ st.markdown("""
     .stDataFrame {
         border: 1px solid #cbd5e0;
     }
+    .generate-section {
+        background-color: #edf2f7;
+        padding: 2rem;
+        border-radius: 8px;
+        border: 1px solid #cbd5e0;
+        margin-bottom: 2rem;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 # Paths
-PROCESSED_DATA_DIR = Path("data/processed")
+DASHBOARD_PROCESSED_DIR = Path("data/dashboard_data/processed")
+TOTAL_DATA_DIR = Path("data/total_data")
+
+def load_available_entities():
+    """Load available entities from total_data files"""
+    entities = {'buyer': [], 'seller': []}
+    
+    for entity_type in ['buyer', 'seller']:
+        filepath = TOTAL_DATA_DIR / f"{entity_type}s_total.json"
+        if filepath.exists():
+            with open(filepath, 'r') as f:
+                data = json.load(f)
+                entities[entity_type] = sorted([int(eid) for eid in data['entities'].keys()])
+    
+    return entities
+
+def run_pipeline(entity_type, entity_id, start_date, end_date):
+    """Run the complete pipeline for an entity"""
+    import sys
+    sys.path.insert(0, str(Path(__file__).parent / "src"))
+    
+    from dashboard_executor import DashboardExecutor
+    from insights_generator import BenchmarkingInsightsGenerator
+    import config
+    
+    # Build parameters
+    params = {
+        'start_date': start_date,
+        'end_date': end_date,
+        'top_n': config.DEFAULT_PARAMS[entity_type]['top_n']
+    }
+    
+    try:
+        # Step 1: Execute dashboard queries
+        executor = DashboardExecutor()
+        dashboard_file = executor.process_entity(entity_type, entity_id, params)
+        
+        # Step 2: Generate insights
+        generator = BenchmarkingInsightsGenerator()
+        insights_file = generator.generate_insights(dashboard_file)
+        
+        return insights_file, None
+    
+    except Exception as e:
+        return None, str(e)
+
+def load_latest_insight(entity_type, entity_id):
+    """Load the most recent insight file for an entity"""
+    pattern = f"{entity_type}_{entity_id}_insights_*.json"
+    files = list(DASHBOARD_PROCESSED_DIR.glob(pattern))
+    
+    if not files:
+        return None
+    
+    # Get most recent
+    latest_file = max(files, key=lambda f: f.stat().st_mtime)
+    
+    with open(latest_file, 'r') as f:
+        return json.load(f)
 
 def load_all_insights():
-    """Load all processed insights and group by entity ID"""
-    if not PROCESSED_DATA_DIR.exists():
-        return {}
+    """Load all processed insights"""
+    if not DASHBOARD_PROCESSED_DIR.exists():
+        return []
     
-    files = list(PROCESSED_DATA_DIR.glob("*_insights_*.json"))
-    
-    # Group insights by entity_id
-    entities = {}
+    files = list(DASHBOARD_PROCESSED_DIR.glob("*_insights_*.json"))
+    insights = []
     
     for file in files:
         try:
             with open(file, 'r') as f:
                 data = json.load(f)
-                
-            entity_id = data.get('entity_id')
-            entity_type = data.get('entity_type')
-            
-            if entity_id not in entities:
-                entities[entity_id] = {
-                    'entity_id': entity_id,
-                    'buyer': None,
-                    'seller': None
-                }
-            
-            entities[entity_id][entity_type] = data
-            
+                insights.append(data)
         except Exception as e:
             st.error(f"Error loading {file.name}: {e}")
     
-    return entities
+    return insights
 
-def get_entity_summary(entities):
-    """Create summary dataframe from entities"""
-    if not entities:
-        return pd.DataFrame()
-    
-    summaries = []
-    for entity_id, data in entities.items():
-        buyer_data = data.get('buyer')
-        seller_data = data.get('seller')
-        
-        roles = []
-        total_insights = 0
-        high_priority = 0
-        
-        if buyer_data:
-            roles.append('Buyer')
-            total_insights += buyer_data.get('insights_count', 0)
-            high_priority += buyer_data.get('high_priority_count', 0)
-        
-        if seller_data:
-            roles.append('Seller')
-            total_insights += seller_data.get('insights_count', 0)
-            high_priority += seller_data.get('high_priority_count', 0)
-        
-        summaries.append({
-            'Entity ID': entity_id,
-            'Roles': ' + '.join(roles),
-            'Total Insights': total_insights,
-            'High Priority': high_priority
-        })
-    
-    return pd.DataFrame(summaries)
-
-def display_insight(insight, entity_type):
+def display_insight(insight):
     """Display a single insight"""
     priority = insight.get('priority', 'medium')
     title = insight.get('title', 'Insight')
     observation = insight.get('observation', 'N/A')
     recommendation = insight.get('recommendation', 'N/A')
+    comparison_type = insight.get('comparison_type', 'N/A')
     
     card_class = f"insight-card insight-card-{priority}"
     badge_class = f"badge-{priority}"
+    
+    # Comparison type label
+    comparison_labels = {
+        'self': 'vs Historical',
+        'benchmark': 'vs Platform',
+        'both': 'Combined Analysis'
+    }
+    comparison_label = comparison_labels.get(comparison_type, comparison_type)
     
     st.markdown(f"""
     <div class="{card_class}">
         <div>
             <span class="priority-badge {badge_class}">{priority.upper()}</span>
+            <span class="comparison-badge">{comparison_label}</span>
             <span style="font-size: 1.1rem; font-weight: 600; color: #2d3748; margin-left: 0.5rem;">{title}</span>
         </div>
     </div>
@@ -712,29 +253,45 @@ def display_insight(insight, entity_type):
     col1, col2 = st.columns([1, 1])
     
     with col1:
-        st.markdown("**Observation**")
+        st.markdown("**📊 Observation**")
         st.write(observation)
     
     with col2:
-        st.markdown("**Recommendation**")
+        st.markdown("**💡 Recommendation**")
         st.info(recommendation)
+    
+    # Show metrics if available
+    metrics = insight.get('metrics', [])
+    if metrics:
+        st.caption(f"**Related Metrics:** {', '.join(metrics)}")
     
     st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
 
-def create_simple_bar_chart(data_dict, title):
-    """Create a simple bar chart"""
+def create_comparison_chart(insights):
+    """Create chart showing comparison types"""
+    comparison_counts = {'Self': 0, 'Benchmark': 0, 'Both': 0}
+    
+    for insight in insights:
+        comp_type = insight.get('comparison_type', 'self')
+        if comp_type == 'self':
+            comparison_counts['Self'] += 1
+        elif comp_type == 'benchmark':
+            comparison_counts['Benchmark'] += 1
+        elif comp_type == 'both':
+            comparison_counts['Both'] += 1
+    
     fig = go.Figure(data=[
         go.Bar(
-            x=list(data_dict.keys()),
-            y=list(data_dict.values()),
-            marker_color='#3182ce',
-            text=list(data_dict.values()),
+            x=list(comparison_counts.keys()),
+            y=list(comparison_counts.values()),
+            marker_color=['#3182ce', '#805ad5', '#38a169'],
+            text=list(comparison_counts.values()),
             textposition='auto',
         )
     ])
     
     fig.update_layout(
-        title=title,
+        title="Insights by Comparison Type",
         xaxis_title="",
         yaxis_title="Count",
         showlegend=False,
@@ -753,241 +310,320 @@ def create_simple_bar_chart(data_dict, title):
 # Main App
 def main():
     # Header
-    st.markdown('<h1>Procurement Insights Platform</h1>', unsafe_allow_html=True)
-    st.caption("AI-powered procurement analytics for buyers and sellers")
+    st.markdown('<h1>📊 Procurement Insights Platform</h1>', unsafe_allow_html=True)
+    st.caption("AI-powered procurement analytics with benchmarking")
     st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
     
     # Sidebar
     with st.sidebar:
-        st.markdown("### Filters")
+        st.markdown("### 🔧 Navigation")
         
-        entity_filter = st.selectbox(
-            "View Mode",
-            options=['All Entities', 'Buyers Only', 'Sellers Only']
+        mode = st.radio(
+            "Select Mode",
+            options=['Generate New Insights', 'View Existing Insights'],
+            label_visibility="collapsed"
         )
         
         st.markdown("---")
         
-        if st.button("Refresh Data", use_container_width=True):
-            st.cache_data.clear()
+        if mode == 'View Existing Insights':
+            entity_filter = st.selectbox(
+                "Filter by Type",
+                options=['All', 'Buyers Only', 'Sellers Only']
+            )
+        
+        st.markdown("---")
+        
+        if st.button("🔄 Refresh", use_container_width=True):
             st.rerun()
         
         st.markdown("---")
-        st.caption("Select an entity from the table to view detailed insights")
+        st.caption("**Tip:** Generate insights for specific entities or browse all existing insights")
     
-    # Load insights
-    entities = load_all_insights()
-    
-    # Filter entities based on selection
-    filtered_entities = {}
-    for entity_id, data in entities.items():
-        if entity_filter == 'Buyers Only' and not data.get('buyer'):
-            continue
-        if entity_filter == 'Sellers Only' and not data.get('seller'):
-            continue
-        filtered_entities[entity_id] = data
-    
-    if not filtered_entities:
-        st.warning("No insights found. Please generate insights first.")
-        st.code("""
-cd insights_system/src
-python run_all.py --limit 10
-        """)
-        st.stop()
-    
-    # Summary metrics
-    st.markdown("### Overview")
-    
-    col1, col2, col3, col4 = st.columns(4)
-    
-    total_entities = len(filtered_entities)
-    total_buyers = sum(1 for d in filtered_entities.values() if d.get('buyer'))
-    total_sellers = sum(1 for d in filtered_entities.values() if d.get('seller'))
-    
-    total_insights = 0
-    high_priority_insights = 0
-    for data in filtered_entities.values():
-        for entity_data in [data.get('buyer'), data.get('seller')]:
-            if entity_data:
-                total_insights += entity_data.get('insights_count', 0)
-                high_priority_insights += entity_data.get('high_priority_count', 0)
-    
-    with col1:
-        st.markdown(f'<div class="metric-container"><p class="metric-label">Total Entities</p><p class="metric-value">{total_entities}</p></div>', unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown(f'<div class="metric-container"><p class="metric-label">Buyers / Sellers</p><p class="metric-value">{total_buyers} / {total_sellers}</p></div>', unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown(f'<div class="metric-container"><p class="metric-label">Total Insights</p><p class="metric-value">{total_insights}</p></div>', unsafe_allow_html=True)
-    
-    with col4:
-        st.markdown(f'<div class="metric-container"><p class="metric-label">High Priority</p><p class="metric-value">{high_priority_insights}</p></div>', unsafe_allow_html=True)
-    
-    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
-    
-    # Priority distribution chart
-    priority_counts = {'High': 0, 'Medium': 0, 'Low': 0}
-    for data in filtered_entities.values():
-        for entity_data in [data.get('buyer'), data.get('seller')]:
-            if entity_data:
-                for insight in entity_data.get('insights', []):
-                    priority = insight.get('priority', 'medium').capitalize()
-                    priority_counts[priority] = priority_counts.get(priority, 0) + 1
-    
-    if any(priority_counts.values()):
-        chart = create_simple_bar_chart(priority_counts, "Insights by Priority Level")
-        st.plotly_chart(chart, use_container_width=True)
-    
-    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
-    
-    # Entity list
-    st.markdown("### Entities")
-    
-    summary_df = get_entity_summary(filtered_entities)
-    
-    if not summary_df.empty:
-        summary_df_sorted = summary_df.sort_values('High Priority', ascending=False)
+    # Mode 1: Generate New Insights
+    if mode == 'Generate New Insights':
+        st.markdown('<div class="generate-section">', unsafe_allow_html=True)
+        st.markdown("### 🚀 Generate New Insights")
+        st.markdown("</div>", unsafe_allow_html=True)
         
-        st.dataframe(
-            summary_df_sorted,
-            use_container_width=True,
-            hide_index=True
-        )
+        # Load available entities
+        available_entities = load_available_entities()
+        
+        col1, col2 = st.columns([1, 1])
+        
+        with col1:
+            entity_type = st.selectbox(
+                "Entity Type",
+                options=['buyer', 'seller'],
+                format_func=lambda x: x.capitalize()
+            )
+        
+        with col2:
+            if available_entities[entity_type]:
+                entity_id = st.selectbox(
+                    "Entity ID",
+                    options=available_entities[entity_type]
+                )
+            else:
+                st.warning(f"No {entity_type}s available in total_data. Run populate_total_data.py first.")
+                st.stop()
+        
+        st.markdown("#### Date Range")
+        
+        col3, col4, col5 = st.columns([1, 1, 1])
+        
+        with col3:
+            preset = st.selectbox(
+                "Quick Select",
+                options=['Last 30 Days', 'Last 90 Days', 'Last 180 Days', 'Last 365 Days', 'Custom'],
+                index=1  # Default to 90 days
+            )
+        
+        if preset == 'Custom':
+            with col4:
+                start_date = st.date_input(
+                    "Start Date",
+                    value=datetime.now() - timedelta(days=90)
+                )
+            with col5:
+                end_date = st.date_input(
+                    "End Date",
+                    value=datetime.now()
+                )
+        else:
+            days_map = {
+                'Last 30 Days': 30,
+                'Last 90 Days': 90,
+                'Last 180 Days': 180,
+                'Last 365 Days': 365
+            }
+            days = days_map[preset]
+            start_date = datetime.now() - timedelta(days=days)
+            end_date = datetime.now()
+            
+            with col4:
+                st.info(f"**From:** {start_date.strftime('%Y-%m-%d')}")
+            with col5:
+                st.info(f"**To:** {end_date.strftime('%Y-%m-%d')}")
         
         st.markdown("")
         
+        # Generate button
+        if st.button("🎯 Generate Insights", type="primary", use_container_width=True):
+            with st.spinner(f"Generating insights for {entity_type} {entity_id}..."):
+                
+                # Progress indicator
+                progress_text = st.empty()
+                
+                progress_text.info("⏳ Step 1/2: Executing dashboard queries...")
+                time.sleep(0.5)
+                
+                # Run pipeline
+                insights_file, error = run_pipeline(
+                    entity_type,
+                    entity_id,
+                    start_date.strftime('%Y-%m-%d'),
+                    end_date.strftime('%Y-%m-%d')
+                )
+                
+                if error:
+                    progress_text.empty()
+                    st.error(f"❌ Error: {error}")
+                    
+                    if "402" in error or "credits" in error.lower():
+                        st.warning("**OpenRouter Credits Issue:** Please add credits at https://openrouter.ai/settings/credits")
+                    
+                    st.stop()
+                
+                progress_text.success("✅ Step 1/2: Dashboard queries completed")
+                time.sleep(0.5)
+                
+                progress_text.info("⏳ Step 2/2: Generating AI insights...")
+                time.sleep(0.5)
+                
+                progress_text.success("✅ Step 2/2: Insights generated successfully!")
+                time.sleep(1)
+                
+                progress_text.empty()
+                
+                st.success(f"✅ **Insights generated successfully for {entity_type} {entity_id}!**")
+                
+                # Auto-switch to view mode
+                st.info("📊 **Scroll down to view the insights**")
+        
+        # Show latest insights if available
+        st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+        
+        latest_insight = load_latest_insight(entity_type, entity_id)
+        
+        if latest_insight:
+            st.markdown(f"### 📈 Latest Insights: {entity_type.capitalize()} {entity_id}")
+            
+            # Display insights
+            display_insights_section(latest_insight)
+    
+    # Mode 2: View Existing Insights
+    else:
+        st.markdown("### 📚 All Generated Insights")
+        
+        all_insights = load_all_insights()
+        
+        if not all_insights:
+            st.warning("No insights found. Generate some insights first!")
+            st.stop()
+        
+        # Filter by entity type
+        if entity_filter == 'Buyers Only':
+            all_insights = [i for i in all_insights if i.get('entity_type') == 'buyer']
+        elif entity_filter == 'Sellers Only':
+            all_insights = [i for i in all_insights if i.get('entity_type') == 'seller']
+        
+        # Summary metrics
+        col1, col2, col3, col4 = st.columns(4)
+        
+        total_entities = len(all_insights)
+        total_insights_count = sum(i.get('insights_count', 0) for i in all_insights)
+        high_priority_count = sum(i.get('high_priority_count', 0) for i in all_insights)
+        avg_insights = total_insights_count / total_entities if total_entities > 0 else 0
+        
+        with col1:
+            st.markdown(f'<div class="metric-container"><p class="metric-label">Total Entities</p><p class="metric-value">{total_entities}</p></div>', unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown(f'<div class="metric-container"><p class="metric-label">Total Insights</p><p class="metric-value">{total_insights_count}</p></div>', unsafe_allow_html=True)
+        
+        with col3:
+            st.markdown(f'<div class="metric-container"><p class="metric-label">High Priority</p><p class="metric-value">{high_priority_count}</p></div>', unsafe_allow_html=True)
+        
+        with col4:
+            st.markdown(f'<div class="metric-container"><p class="metric-label">Avg per Entity</p><p class="metric-value">{avg_insights:.1f}</p></div>', unsafe_allow_html=True)
+        
+        st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+        
         # Entity selector
-        selected_entity_id = st.selectbox(
-            "Select Entity for Detailed Analysis",
-            options=summary_df['Entity ID'].tolist(),
-            format_func=lambda x: f"Entity {x} ({summary_df[summary_df['Entity ID']==x]['Roles'].values[0]}) - {summary_df[summary_df['Entity ID']==x]['Total Insights'].values[0]} insights"
+        entities_list = [f"{i['entity_type'].capitalize()} {i['entity_id']} ({i['insights_count']} insights)" 
+                        for i in all_insights]
+        
+        selected_index = st.selectbox(
+            "Select Entity",
+            range(len(entities_list)),
+            format_func=lambda i: entities_list[i]
         )
         
-        # Get selected entity data
-        selected_entity = filtered_entities.get(selected_entity_id)
+        selected_insight_data = all_insights[selected_index]
         
-        if selected_entity:
-            st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
-            
-            # Entity header
-            buyer_data = selected_entity.get('buyer')
-            seller_data = selected_entity.get('seller')
-            
-            badges_html = ""
-            if buyer_data:
-                badges_html += '<span class="entity-badge badge-buyer">BUYER</span>'
-            if seller_data:
-                badges_html += '<span class="entity-badge badge-seller">SELLER</span>'
-            
-            st.markdown(f'<h2>Entity {selected_entity_id} {badges_html}</h2>', unsafe_allow_html=True)
-            
-            # Show insights for each role
-            if buyer_data:
-                st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
-                st.markdown("### Buyer Insights")
-                
-                period = buyer_data.get('data_period', {})
-                st.caption(f"Analysis Period: {period.get('start', 'N/A')} to {period.get('end', 'N/A')}")
-                
-                buyer_insights = buyer_data.get('insights', [])
-                
-                if buyer_insights:
-                    # Filter options
-                    filter_priority = st.radio(
-                        "Filter buyer insights by priority",
-                        options=['All', 'High', 'Medium', 'Low'],
-                        horizontal=True,
-                        key='buyer_filter'
-                    )
-                    
-                    st.markdown("")
-                    
-                    # Sort by priority
-                    priority_order = {'high': 0, 'medium': 1, 'low': 2}
-                    sorted_insights = sorted(
-                        buyer_insights,
-                        key=lambda x: priority_order.get(x.get('priority', 'medium'), 1)
-                    )
-                    
-                    # Filter
-                    if filter_priority != 'All':
-                        sorted_insights = [
-                            i for i in sorted_insights 
-                            if i.get('priority', 'medium').capitalize() == filter_priority
-                        ]
-                    
-                    if sorted_insights:
-                        for insight in sorted_insights:
-                            display_insight(insight, 'buyer')
-                    else:
-                        st.info(f"No {filter_priority.lower()} priority buyer insights")
-                    
-                    # Download button
-                    json_data = json.dumps(buyer_data, indent=2)
-                    st.download_button(
-                        label="Download Buyer Insights (JSON)",
-                        data=json_data,
-                        file_name=f"buyer_{selected_entity_id}_insights.json",
-                        mime="application/json"
-                    )
-                else:
-                    st.info("No buyer insights available")
-            
-            if seller_data:
-                st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
-                st.markdown("### Seller Insights")
-                
-                period = seller_data.get('data_period', {})
-                st.caption(f"Analysis Period: {period.get('start', 'N/A')} to {period.get('end', 'N/A')}")
-                
-                seller_insights = seller_data.get('insights', [])
-                
-                if seller_insights:
-                    # Filter options
-                    filter_priority = st.radio(
-                        "Filter seller insights by priority",
-                        options=['All', 'High', 'Medium', 'Low'],
-                        horizontal=True,
-                        key='seller_filter'
-                    )
-                    
-                    st.markdown("")
-                    
-                    # Sort by priority
-                    priority_order = {'high': 0, 'medium': 1, 'low': 2}
-                    sorted_insights = sorted(
-                        seller_insights,
-                        key=lambda x: priority_order.get(x.get('priority', 'medium'), 1)
-                    )
-                    
-                    # Filter
-                    if filter_priority != 'All':
-                        sorted_insights = [
-                            i for i in sorted_insights 
-                            if i.get('priority', 'medium').capitalize() == filter_priority
-                        ]
-                    
-                    if sorted_insights:
-                        for insight in sorted_insights:
-                            display_insight(insight, 'seller')
-                    else:
-                        st.info(f"No {filter_priority.lower()} priority seller insights")
-                    
-                    # Download button
-                    json_data = json.dumps(seller_data, indent=2)
-                    st.download_button(
-                        label="Download Seller Insights (JSON)",
-                        data=json_data,
-                        file_name=f"seller_{selected_entity_id}_insights.json",
-                        mime="application/json"
-                    )
-                else:
-                    st.info("No seller insights available")
+        st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+        
+        # Display selected insights
+        display_insights_section(selected_insight_data)
     
     # Footer
     st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
     st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+
+def display_insights_section(data):
+    """Display insights section with metrics and insights"""
+    entity_type = data.get('entity_type', 'unknown')
+    entity_id = data.get('entity_id', 'N/A')
+    
+    # Header
+    badge_class = 'badge-buyer' if entity_type == 'buyer' else 'badge-seller'
+    st.markdown(f'<h2><span class="entity-badge {badge_class}">{entity_type.upper()}</span> Entity {entity_id}</h2>', unsafe_allow_html=True)
+    
+    # Period info
+    period = data.get('dashboard_period', {})
+    st.caption(f"**Dashboard Period:** {period.get('start_date', 'N/A')} to {period.get('end_date', 'N/A')}")
+    
+    baseline = data.get('baseline_period') or data.get('total_data_version', 'N/A')
+    if baseline:
+        st.caption(f"**Baseline Data:** {baseline}")
+    
+    st.markdown("")
+    
+    # Metrics
+    col1, col2, col3, col4 = st.columns(4)
+    
+    insights = data.get('insights', [])
+    insights_count = data.get('insights_count', len(insights))
+    high_count = data.get('high_priority_count', 0)
+    comparison_types = data.get('comparison_types', {})
+    
+    with col1:
+        st.metric("Total Insights", insights_count)
+    
+    with col2:
+        st.metric("High Priority", high_count)
+    
+    with col3:
+        self_count = comparison_types.get('self', 0)
+        st.metric("Self-Comparison", self_count)
+    
+    with col4:
+        benchmark_count = comparison_types.get('benchmark', 0) + comparison_types.get('both', 0)
+        st.metric("With Benchmark", benchmark_count)
+    
+    st.markdown("")
+    
+    # Comparison chart
+    if insights:
+        chart = create_comparison_chart(insights)
+        st.plotly_chart(chart, use_container_width=True)
+    
+    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+    
+    # Insights
+    if insights:
+        # Filter
+        filter_priority = st.radio(
+            "Filter by priority",
+            options=['All', 'High', 'Medium', 'Low'],
+            horizontal=True
+        )
+        
+        filter_comparison = st.radio(
+            "Filter by comparison type",
+            options=['All', 'Self', 'Benchmark', 'Both'],
+            horizontal=True
+        )
+        
+        st.markdown("")
+        
+        # Sort by priority
+        priority_order = {'high': 0, 'medium': 1, 'low': 2}
+        sorted_insights = sorted(
+            insights,
+            key=lambda x: priority_order.get(x.get('priority', 'medium'), 1)
+        )
+        
+        # Apply filters
+        if filter_priority != 'All':
+            sorted_insights = [
+                i for i in sorted_insights 
+                if i.get('priority', 'medium').capitalize() == filter_priority
+            ]
+        
+        if filter_comparison != 'All':
+            sorted_insights = [
+                i for i in sorted_insights 
+                if i.get('comparison_type', 'self').capitalize() == filter_comparison.lower()
+            ]
+        
+        if sorted_insights:
+            for insight in sorted_insights:
+                display_insight(insight)
+        else:
+            st.info("No insights match the selected filters")
+        
+        # Download button
+        json_data = json.dumps(data, indent=2)
+        st.download_button(
+            label="📥 Download Insights (JSON)",
+            data=json_data,
+            file_name=f"{entity_type}_{entity_id}_insights.json",
+            mime="application/json"
+        )
+    else:
+        st.info("No insights available for this entity")
 
 if __name__ == "__main__":
     main()

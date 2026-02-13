@@ -1,0 +1,261 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 91,
+  "execution_timestamp": "2026-02-13T15:55:27.469985",
+  "parameters": {
+    "start_date": "2025-02-13",
+    "end_date": "2026-02-13",
+    "top_n": 10
+  },
+  "queries": {
+    "overview_metrics": {
+      "description": "Period-over-period comparison of buyer metrics",
+      "result_count": 1,
+      "data": [
+        {
+          "buyer_org_id": 91,
+          "current_period_purchases": 58051671.88,
+          "previous_period_purchases": 0.0,
+          "purchase_percentage_change": null,
+          "current_period_quantity": 12913.0,
+          "previous_period_quantity": 0.0,
+          "quantity_percentage_change": null,
+          "avg_purchase_per_supplier_current": "5805167.19",
+          "avg_purchase_per_supplier_previous": null,
+          "avg_purchase_per_supplier_percentage_change": null,
+          "avg_price_per_unit_current": "4495.60",
+          "avg_price_per_unit_previous": null,
+          "avg_price_per_unit_percentage_change": null,
+          "items_purchased_current": 21,
+          "items_purchased_previous": 0,
+          "items_purchased_percentage_change": null,
+          "new_items_purchased_current": 20,
+          "new_items_purchased_previous": 0,
+          "suppliers_current": 10,
+          "suppliers_previous": 0,
+          "suppliers_percentage_change": null,
+          "new_suppliers_current": 9,
+          "new_suppliers_previous": 0
+        }
+      ]
+    },
+    "top_products": {
+      "description": "Top products by purchase amount",
+      "result_count": 10,
+      "data": [
+        {
+          "buyer_org_id": 91,
+          "product_id": 70577,
+          "product_name": "Tarsons -20\u00b0C Mini Cooler 32",
+          "total_purchase_amount": 27000000.0,
+          "rank_within_buyer": 1
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 70671,
+          "product_name": "Tarsons All Clear Desiccator Vacuum 300.0",
+          "total_purchase_amount": 10762500.0,
+          "rank_within_buyer": 2
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 71293,
+          "product_name": "Accent Drive Shaft",
+          "total_purchase_amount": 7434118.0,
+          "rank_within_buyer": 3
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 70669,
+          "product_name": "Tarsons All Clear Desiccator Vacuum 200.0",
+          "total_purchase_amount": 3825000.0,
+          "rank_within_buyer": 4
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 70897,
+          "product_name": "Amphenol Cable Joiner [SC-L-PG11-04-BL]",
+          "total_purchase_amount": 2812481.1,
+          "rank_within_buyer": 5
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 70947,
+          "product_name": "Memcor Membranes",
+          "total_purchase_amount": 1860980.0,
+          "rank_within_buyer": 6
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 70912,
+          "product_name": "Plug Valve",
+          "total_purchase_amount": 1590000.0,
+          "rank_within_buyer": 7
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 70581,
+          "product_name": "Tarsons 0\u00b0C Mini Cooler 20",
+          "total_purchase_amount": 1372500.0,
+          "rank_within_buyer": 8
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 70946,
+          "product_name": "Almond House Almond Butter",
+          "total_purchase_amount": 610000.0,
+          "rank_within_buyer": 9
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 71051,
+          "product_name": "NSW HC Hot & Cold Chamber ''caltan'' (minus 40\u00b0c To +110\u00b0c) 2000 x 2000 x 2000",
+          "total_purchase_amount": 546000.0,
+          "rank_within_buyer": 10
+        }
+      ]
+    },
+    "top_suppliers": {
+      "description": "Top suppliers by purchase amount",
+      "result_count": 10,
+      "data": [
+        {
+          "buyer_org_id": 91,
+          "seller_org_id": 509,
+          "company_name": "Tarsons Products Limited",
+          "total_purchase_amount": 34959811.519999996,
+          "rank_within_buyer": 1
+        },
+        {
+          "buyer_org_id": 91,
+          "seller_org_id": 91,
+          "company_name": "A one Precision Tools Center",
+          "total_purchase_amount": 13526609.38,
+          "rank_within_buyer": 2
+        },
+        {
+          "buyer_org_id": 91,
+          "seller_org_id": 542,
+          "company_name": "Fayyaz & Co",
+          "total_purchase_amount": 7434118.0,
+          "rank_within_buyer": 3
+        },
+        {
+          "buyer_org_id": 91,
+          "seller_org_id": 541,
+          "company_name": "Venky solutions",
+          "total_purchase_amount": 1191945.0,
+          "rank_within_buyer": 4
+        },
+        {
+          "buyer_org_id": 91,
+          "seller_org_id": 2654,
+          "company_name": "Development",
+          "total_purchase_amount": 546000.0,
+          "rank_within_buyer": 5
+        },
+        {
+          "buyer_org_id": 91,
+          "seller_org_id": 534,
+          "company_name": "KPL Bro",
+          "total_purchase_amount": 209551.5,
+          "rank_within_buyer": 6
+        },
+        {
+          "buyer_org_id": 91,
+          "seller_org_id": 536,
+          "company_name": "sandeepkumar s",
+          "total_purchase_amount": 104777.63999999998,
+          "rank_within_buyer": 7
+        },
+        {
+          "buyer_org_id": 91,
+          "seller_org_id": 4371,
+          "company_name": "Vipani",
+          "total_purchase_amount": 55528.44,
+          "rank_within_buyer": 8
+        },
+        {
+          "buyer_org_id": 91,
+          "seller_org_id": 932,
+          "company_name": "csk new",
+          "total_purchase_amount": 12937.5,
+          "rank_within_buyer": 9
+        },
+        {
+          "buyer_org_id": 91,
+          "seller_org_id": 2653,
+          "company_name": "sandeep kumar s",
+          "total_purchase_amount": 10392.9,
+          "rank_within_buyer": 10
+        }
+      ]
+    },
+    "top_categories": {
+      "description": "Top categories by purchase amount",
+      "result_count": 10,
+      "data": [
+        {
+          "buyer_org_id": 91,
+          "category": "Cryosurgery equipment or accessories",
+          "total_purchase_amount": 27460700.419999998,
+          "rank_within_buyer": 1
+        },
+        {
+          "buyer_org_id": 91,
+          "category": "Drive shafts",
+          "total_purchase_amount": 7434118.0,
+          "rank_within_buyer": 2
+        },
+        {
+          "buyer_org_id": 91,
+          "category": "Cable joint",
+          "total_purchase_amount": 2812481.1,
+          "rank_within_buyer": 3
+        },
+        {
+          "buyer_org_id": 91,
+          "category": "General laboratory storage containers and cabinets",
+          "total_purchase_amount": 2715650.0,
+          "rank_within_buyer": 4
+        },
+        {
+          "buyer_org_id": 91,
+          "category": "Water treatment and supply equipment",
+          "total_purchase_amount": 1872589.38,
+          "rank_within_buyer": 5
+        },
+        {
+          "buyer_org_id": 91,
+          "category": "Valves",
+          "total_purchase_amount": 1590000.0,
+          "rank_within_buyer": 6
+        },
+        {
+          "buyer_org_id": 91,
+          "category": "Laboratory environmental conditioning equipment",
+          "total_purchase_amount": 546000.0,
+          "rank_within_buyer": 7
+        },
+        {
+          "buyer_org_id": 91,
+          "category": "Asbestos",
+          "total_purchase_amount": 147015.0,
+          "rank_within_buyer": 8
+        },
+        {
+          "buyer_org_id": 91,
+          "category": "Canned or jarred golden gourmet shallots",
+          "total_purchase_amount": 121497.43999999999,
+          "rank_within_buyer": 9
+        },
+        {
+          "buyer_org_id": 91,
+          "category": "Industrial cabinets or drawers or shelving",
+          "total_purchase_amount": 93280.2,
+          "rank_within_buyer": 10
+        }
+      ]
+    }
+  }
+}

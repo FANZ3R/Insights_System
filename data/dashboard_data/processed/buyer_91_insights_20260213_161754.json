@@ -1,0 +1,92 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 91,
+  "generated_at": "2026-02-13T16:17:54.123256",
+  "dashboard_period": {
+    "start_date": "2025-11-15",
+    "end_date": "2026-02-13",
+    "top_n": 10
+  },
+  "insights": [
+    {
+      "title": "Supplier base collapsed to a single vendor",
+      "observation": "In the last 90 days you purchased from only 1 supplier versus 10 suppliers historically (\u201190%). The industry average is 3.7 suppliers per period.",
+      "recommendation": "Re\u2011engage with previously used suppliers and qualify at least 2\u20113 additional vendors to diversify risk and improve negotiating leverage.",
+      "priority": "high",
+      "comparison_type": "both",
+      "metrics": [
+        "suppliers_current",
+        "suppliers_historical",
+        "avg_suppliers"
+      ]
+    },
+    {
+      "title": "Spend concentration on two products",
+      "observation": "Two products (Tarsons Desiccator Vacuums 300 & 200) account for 87.8% of the period spend (13.5M). Historically spend is spread across many SKUs.",
+      "recommendation": "Conduct a SKU rationalization review; negotiate bulk discounts for these high\u2011volume items and explore alternative suppliers to reduce dependence.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "top_products_spend_share",
+        "items_purchased_current"
+      ]
+    },
+    {
+      "title": "Period spend far below industry norm",
+      "observation": "Current period spend is $13.5\u202fM, which is 80% lower than the platform average spend of $65.9\u202fM (\u201180%).",
+      "recommendation": "Analyze demand forecasts and inventory policies to identify unmet procurement opportunities; consider consolidating spend to achieve economies of scale.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "current_period_purchases",
+        "avg_period_spend"
+      ]
+    },
+    {
+      "title": "Average price per unit dropped significantly vs history",
+      "observation": "Avg price per unit fell from $4,495.60 historically to $2,621.44 now (\u201141.7%). The industry average price per unit is about $3,452, making your current price 24% lower than the benchmark.",
+      "recommendation": "Leverage the lower unit cost to renegotiate contracts for other categories and lock in favorable pricing before potential market increases.",
+      "priority": "medium",
+      "comparison_type": "both",
+      "metrics": [
+        "avg_price_per_unit_current",
+        "avg_price_per_unit_historical",
+        "avg_price_per_unit_benchmark"
+      ]
+    },
+    {
+      "title": "Quantity and item count lagging behind peers",
+      "observation": "You purchased 5,160 units across 7 items, versus the industry averages of 19,097 units and 18.7 items (\u201173% and \u201162% respectively). Historical averages are 12,913 units and 21 items.",
+      "recommendation": "Review demand planning and inventory turnover to ensure procurement aligns with operational needs; consider expanding the catalog to support upcoming projects.",
+      "priority": "medium",
+      "comparison_type": "both",
+      "metrics": [
+        "current_period_quantity",
+        "current_items_purchased",
+        "avg_period_quantity",
+        "avg_items_purchased"
+      ]
+    },
+    {
+      "title": "Shift away from high\u2011value categories",
+      "observation": "Historically the top spend category is Cryosurgery equipment ($27.46\u202fM). In the current period the only recorded category spend is Water treatment ($11.6\u202fK), indicating a dramatic shift away from core high\u2011value categories.",
+      "recommendation": "Assess whether the drop is due to project completion, budgeting, or supplier issues; if strategic, re\u2011allocate budget to maintain capability in critical categories.",
+      "priority": "low",
+      "comparison_type": "self",
+      "metrics": [
+        "top_categories_historical",
+        "top_categories_current"
+      ]
+    }
+  ],
+  "insights_count": 6,
+  "high_priority_count": 3,
+  "comparison_types": {
+    "self": 2,
+    "benchmark": 1,
+    "both": 3
+  },
+  "source_dashboard_file": "/home/user/PROJECT/Vendor_AI_Insights/Insights_system/data/dashboard_data/raw/buyer_91_dashboard_20260213_161746.json",
+  "total_data_version": "2026-02-13T12:29:42.465857",
+  "has_historical_data": true
+}

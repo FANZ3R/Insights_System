@@ -1,0 +1,86 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 93,
+  "generated_at": "2026-02-13T15:49:34.737466",
+  "dashboard_period": {
+    "start_date": "2025-11-15",
+    "end_date": "2026-02-13",
+    "top_n": 10
+  },
+  "insights": [
+    {
+      "title": "Dramatic increase in unit price",
+      "observation": "Average price per unit rose from $2,822 (historical) to $472,500 in the current period, a 16,600% increase.",
+      "recommendation": "Negotiate pricing with the existing supplier, explore alternative vendors for boiler water chemicals, and conduct a cost\u2011benefit analysis to justify the high unit cost.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "avg_price_per_unit_current",
+        "avg_price_per_unit_previous"
+      ]
+    },
+    {
+      "title": "Order volume collapsed",
+      "observation": "Quantity purchased dropped from 692 units historically to just 2 units this period, a 99.7% decline.",
+      "recommendation": "Review demand forecasting and internal consumption patterns to determine if the drop reflects true demand or a procurement bottleneck, and adjust ordering processes accordingly.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "current_period_quantity",
+        "previous_period_quantity"
+      ]
+    },
+    {
+      "title": "Spend positioned between median and 75th percentile",
+      "observation": "Current period spend of $945,000 is 78% higher than the industry median ($531,781) yet 90% lower than the 75th percentile ($9,409,248).",
+      "recommendation": "Benchmark against peers in the 75th percentile to identify growth opportunities and consider scaling procurement volumes to achieve better economies of scale.",
+      "priority": "medium",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "current_period_purchases"
+      ]
+    },
+    {
+      "title": "Extremely low purchase volume",
+      "observation": "Only 2 units were purchased this period, which is 98% below the industry 25th\u2011percentile volume of 161 units and far under the median of 510 units.",
+      "recommendation": "Consolidate orders, explore bulk purchasing options, or assess whether the procurement function is under\u2011utilized and can be expanded to capture more volume.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "current_period_quantity"
+      ]
+    },
+    {
+      "title": "Single\u2011supplier reliance exceeds typical benchmarks",
+      "observation": "All $945,000 of spend is sourced from a single supplier (100% concentration). Industry median suppliers = 1, but the 75th percentile is 3.25 and the 90th percentile is 8, indicating higher concentration risk.",
+      "recommendation": "Diversify the supplier base by qualifying additional vendors for boiler water chemicals and other high\u2011cost items to mitigate supply\u2011chain risk.",
+      "priority": "medium",
+      "comparison_type": "both",
+      "metrics": [
+        "suppliers_current",
+        "total_purchase_amount"
+      ]
+    },
+    {
+      "title": "Shift to water\u2011treatment category",
+      "observation": "Historically the top spend category was \"Building construction machinery and accessories\" ($1,008,000). In the current period the top category is \"Water treatment and supply equipment\" ($945,000), indicating a strategic shift in procurement focus.",
+      "recommendation": "Analyze the drivers behind the category change, ensure procurement policies align with the new focus, and evaluate alternative suppliers for water\u2011treatment chemicals to optimize cost and risk.",
+      "priority": "medium",
+      "comparison_type": "both",
+      "metrics": [
+        "top_categories",
+        "top_products"
+      ]
+    }
+  ],
+  "insights_count": 6,
+  "high_priority_count": 3,
+  "comparison_types": {
+    "self": 2,
+    "benchmark": 2,
+    "both": 2
+  },
+  "source_dashboard_file": "/home/user/PROJECT/Vendor_AI_Insights/Insights_system/data/dashboard_data/raw/buyer_93_dashboard_20260213_154829.json",
+  "total_data_version": "2026-02-13T12:29:42.465857",
+  "has_historical_data": true
+}

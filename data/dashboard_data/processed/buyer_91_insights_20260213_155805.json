@@ -1,0 +1,92 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 91,
+  "generated_at": "2026-02-13T15:58:05.853681",
+  "dashboard_period": {
+    "start_date": "2025-08-17",
+    "end_date": "2026-02-13",
+    "top_n": 10
+  },
+  "insights": [
+    {
+      "title": "Significant spend reduction",
+      "observation": "Current period spend dropped 21.36% versus the prior period (25.55\u202fM vs 32.50\u202fM) and is 61% below the industry average spend of 65.90\u202fM for a comparable period.",
+      "recommendation": "Conduct a root\u2011cause analysis of the spend decline, review demand forecasts, and renegotiate contracts or explore alternative suppliers to recover lost volume while protecting margins.",
+      "priority": "high",
+      "comparison_type": "both",
+      "metrics": [
+        "current_period_purchases",
+        "purchase_percentage_change",
+        "avg_period_spend"
+      ]
+    },
+    {
+      "title": "Quantity surge but still under industry norm",
+      "observation": "Units purchased surged 811.20% versus the prior period (11,636 vs 1,277) yet remain 39% below the industry average quantity of 19,097 units per period.",
+      "recommendation": "Validate the drivers behind the quantity spike, ensure inventory turnover remains healthy, and adjust order sizing to better align with market demand and industry benchmarks.",
+      "priority": "high",
+      "comparison_type": "both",
+      "metrics": [
+        "current_period_quantity",
+        "quantity_percentage_change",
+        "avg_period_quantity"
+      ]
+    },
+    {
+      "title": "High supplier concentration risk",
+      "observation": "One supplier (A one Precision Tools Center) accounts for 53% of current period spend (13.53\u202fM of 25.55\u202fM). The buyer\u2019s average spend per supplier is 3.19\u202fM, far below the industry average spend per supplier of ~17.8\u202fM, indicating heavy reliance on a single source.",
+      "recommendation": "Develop a diversification plan: qualify secondary suppliers for the top\u2011spend items, negotiate multi\u2011source contracts, and perform a risk assessment on the primary supplier\u2019s financial and operational stability.",
+      "priority": "high",
+      "comparison_type": "both",
+      "metrics": [
+        "avg_purchase_per_supplier_current",
+        "top_supplier_share",
+        "avg_purchase_per_supplier_percentage_change"
+      ]
+    },
+    {
+      "title": "Avg price per unit far below industry average",
+      "observation": "Average price per unit fell 91.37% versus the prior period (2,196.18 vs 25,447.83) and is 36% lower than the industry average unit price of ~3,452.",
+      "recommendation": "Investigate the product mix shift causing the price drop, confirm that quality standards are maintained, and where appropriate renegotiate pricing for high\u2011value items to improve margin.",
+      "priority": "medium",
+      "comparison_type": "both",
+      "metrics": [
+        "avg_price_per_unit_current",
+        "avg_price_per_unit_previous",
+        "avg_price_per_unit_percentage_change"
+      ]
+    },
+    {
+      "title": "Supplier count exceeds industry norm",
+      "observation": "The buyer engaged 8 distinct suppliers this period, which is 116% higher than the industry average of 3.7 suppliers per period.",
+      "recommendation": "Review supplier performance metrics to identify under\u2011performing partners, and consider consolidating the supplier base to reduce administrative overhead while maintaining strategic diversity.",
+      "priority": "medium",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "suppliers_current",
+        "avg_suppliers"
+      ]
+    },
+    {
+      "title": "Strategic category shift away from high\u2011value Cryosurgery",
+      "observation": "Historically the top spend category was Cryosurgery equipment (27.46\u202fM), but in the current period the leading category is Drive shafts (7.43\u202fM), indicating a pivot in procurement focus.",
+      "recommendation": "Assess the business rationale for the category shift, ensure alignment with core operational needs, and monitor cost trends in the emerging top category to capture potential savings.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "top_categories",
+        "total_purchase_amount"
+      ]
+    }
+  ],
+  "insights_count": 6,
+  "high_priority_count": 3,
+  "comparison_types": {
+    "self": 1,
+    "benchmark": 1,
+    "both": 4
+  },
+  "source_dashboard_file": "/home/user/PROJECT/Vendor_AI_Insights/Insights_system/data/dashboard_data/raw/buyer_91_dashboard_20260213_155701.json",
+  "total_data_version": "2026-02-13T12:29:42.465857",
+  "has_historical_data": true
+}

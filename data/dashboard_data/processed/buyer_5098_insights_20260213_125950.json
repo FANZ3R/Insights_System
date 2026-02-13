@@ -1,0 +1,91 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 5098,
+  "generated_at": "2026-02-13T12:59:50.115756",
+  "dashboard_period": {
+    "start_date": "2025-11-15",
+    "end_date": "2026-02-13",
+    "top_n": 10
+  },
+  "insights": [
+    {
+      "title": "Spending collapsed to zero",
+      "observation": "Your total spend dropped from $2,480,625 in the previous 90\u2011day period to $0 this period \u2013 a 100% decline.",
+      "recommendation": "Investigate the root cause (e.g., budget freeze, contract expiration, system outage) and re\u2011activate purchasing processes where appropriate.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "current_period_purchases",
+        "previous_period_purchases",
+        "purchase_percentage_change"
+      ]
+    },
+    {
+      "title": "Supplier base vanished",
+      "observation": "You went from 1 active supplier in the prior period to none now, representing a 100% reduction in supplier count.",
+      "recommendation": "Review contract statuses and onboarding pipelines to ensure at least one qualified supplier is available for critical items.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "suppliers_current",
+        "suppliers_previous",
+        "suppliers_percentage_change"
+      ]
+    },
+    {
+      "title": "Current spend far below industry norm",
+      "observation": "Your $0 spend this period is 100% lower than the industry median spend of $531,781 and 100% lower than the 75th\u2011percentile benchmark of $9.4\u202fM.",
+      "recommendation": "If the low spend is intentional (e.g., seasonal lull), document the plan; otherwise, align procurement activities with business demand to avoid missed opportunities.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "current_period_purchases"
+      ]
+    },
+    {
+      "title": "Supplier count well under benchmark",
+      "observation": "Having zero active suppliers this period puts you at the bottom of the distribution (industry average 3.7 suppliers, 25th\u2011percentile 1).",
+      "recommendation": "Develop a supplier diversification strategy to maintain at least the industry median of 3\u20114 active suppliers, reducing supply\u2011risk exposure.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "suppliers_current"
+      ]
+    },
+    {
+      "title": "Historical spend dramatically higher than peers",
+      "observation": "Your historical 90\u2011day spend of $2.48\u202fM is ~4.6\u00d7 the industry median ($531\u202fk) and ~62\u00d7 the 25th\u2011percentile ($42\u202fk), indicating a very high spend concentration relative to peers.",
+      "recommendation": "Leverage this buying power to negotiate volume discounts or explore competitive bidding to bring unit costs closer to market levels.",
+      "priority": "high",
+      "comparison_type": "both",
+      "metrics": [
+        "previous_period_purchases",
+        "avg_period_spend"
+      ]
+    },
+    {
+      "title": "Extreme product and supplier concentration",
+      "observation": "All of your historical spend (100%) was on a single product (Almond House Apricot 500\u202fg), within one category (Dried apricots), from one supplier (A one Precision Tools Center). Industry buyers typically source 2\u20113 items from multiple suppliers.",
+      "recommendation": "Conduct a category\u2011risk assessment and identify alternative sources or substitute products to mitigate dependency on a single SKU and supplier.",
+      "priority": "medium",
+      "comparison_type": "both",
+      "metrics": [
+        "items_purchased_current",
+        "suppliers_current",
+        "top_products",
+        "top_suppliers",
+        "top_categories"
+      ]
+    }
+  ],
+  "insights_count": 6,
+  "high_priority_count": 5,
+  "comparison_types": {
+    "self": 2,
+    "benchmark": 2,
+    "both": 2
+  },
+  "source_dashboard_file": "/home/user/PROJECT/Vendor_AI_Insights/Insights_system/data/dashboard_data/raw/buyer_5098_dashboard_20260213_125918.json",
+  "total_data_version": "2026-02-13T12:29:42.465857",
+  "has_historical_data": true
+}

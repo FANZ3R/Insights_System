@@ -1,0 +1,21 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 91,
+  "generated_at": "2026-02-13T16:08:41.066832",
+  "dashboard_period": {
+    "start_date": "2025-11-15",
+    "end_date": "2026-02-13",
+    "top_n": 10
+  },
+  "insights": [],
+  "insights_count": 0,
+  "high_priority_count": 0,
+  "comparison_types": {
+    "self": 0,
+    "benchmark": 0,
+    "both": 0
+  },
+  "source_dashboard_file": "/home/user/PROJECT/Vendor_AI_Insights/Insights_system/data/dashboard_data/raw/buyer_91_dashboard_20260213_160836.json",
+  "total_data_version": "2026-02-13T12:29:42.465857",
+  "has_historical_data": true
+}

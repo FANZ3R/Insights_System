@@ -1,0 +1,81 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 93,
+  "execution_timestamp": "2026-02-13T15:48:26.284060",
+  "parameters": {
+    "start_date": "2025-11-15",
+    "end_date": "2026-02-13",
+    "top_n": 10
+  },
+  "queries": {
+    "overview_metrics": {
+      "description": "Period-over-period comparison of buyer metrics",
+      "result_count": 1,
+      "data": [
+        {
+          "buyer_org_id": 93,
+          "current_period_purchases": 945000.0,
+          "previous_period_purchases": 0.0,
+          "purchase_percentage_change": null,
+          "current_period_quantity": 2.0,
+          "previous_period_quantity": 0.0,
+          "quantity_percentage_change": null,
+          "avg_purchase_per_supplier_current": "945000.00",
+          "avg_purchase_per_supplier_previous": null,
+          "avg_purchase_per_supplier_percentage_change": null,
+          "avg_price_per_unit_current": "472500.00",
+          "avg_price_per_unit_previous": null,
+          "avg_price_per_unit_percentage_change": null,
+          "items_purchased_current": 1,
+          "items_purchased_previous": 0,
+          "items_purchased_percentage_change": null,
+          "new_items_purchased_current": 1,
+          "new_items_purchased_previous": 0,
+          "suppliers_current": 1,
+          "suppliers_previous": 0,
+          "suppliers_percentage_change": null,
+          "new_suppliers_current": 0,
+          "new_suppliers_previous": 0
+        }
+      ]
+    },
+    "top_products": {
+      "description": "Top products by purchase amount",
+      "result_count": 1,
+      "data": [
+        {
+          "buyer_org_id": 93,
+          "product_id": 71444,
+          "product_name": "Boiler Water Chemicals",
+          "total_purchase_amount": 945000.0,
+          "rank_within_buyer": 1
+        }
+      ]
+    },
+    "top_suppliers": {
+      "description": "Top suppliers by purchase amount",
+      "result_count": 1,
+      "data": [
+        {
+          "buyer_org_id": 93,
+          "seller_org_id": 91,
+          "company_name": "A one Precision Tools Center",
+          "total_purchase_amount": 945000.0,
+          "rank_within_buyer": 1
+        }
+      ]
+    },
+    "top_categories": {
+      "description": "Top categories by purchase amount",
+      "result_count": 1,
+      "data": [
+        {
+          "buyer_org_id": 93,
+          "category": "Water treatment and supply equipment",
+          "total_purchase_amount": 945000.0,
+          "rank_within_buyer": 1
+        }
+      ]
+    }
+  }
+}

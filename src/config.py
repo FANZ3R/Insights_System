@@ -32,103 +32,130 @@ OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY')
 OPENROUTER_BASE_URL = 'https://openrouter.ai/api/v1'
 DEFAULT_MODEL = 'openai/gpt-oss-120b'  # ← CORRECTED
 
-# Directory Paths
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Directory Paths 
 QUERIES_DIR = os.path.join(BASE_DIR, 'queries')
-RAW_DATA_DIR = os.path.join(BASE_DIR, 'data', 'raw')
-PROCESSED_DATA_DIR = os.path.join(BASE_DIR, 'data', 'processed')
 
-# Query Files - NEW: Single combined SQL files
-QUERY_FILES = {
-    'buyer': 'buyer_queries.sql',
-    'seller': 'seller_queries.sql'
+# Query subdirectories
+TOTAL_QUERIES_DIR = os.path.join(QUERIES_DIR, 'total_queries')
+DASHBOARD_QUERIES_DIR = os.path.join(QUERIES_DIR, 'dashboard_specific')
+
+# Data directories
+DATA_DIR = os.path.join(BASE_DIR, 'data')
+TOTAL_DATA_DIR = os.path.join(DATA_DIR, 'total_data')
+DASHBOARD_DATA_DIR = os.path.join(DATA_DIR, 'dashboard_data')
+DASHBOARD_RAW_DIR = os.path.join(DASHBOARD_DATA_DIR, 'raw')
+DASHBOARD_PROCESSED_DIR = os.path.join(DASHBOARD_DATA_DIR, 'processed')
+
+# Query Files
+TOTAL_QUERY_FILES = {
+    'buyer': 'buyer_total_queries.sql',
+    'seller': 'seller_total_queries.sql'
 }
 
+DASHBOARD_QUERY_FILES = {
+    'buyer': 'buyer_dashboard_queries.sql',
+    'seller': 'seller_dashboard_queries.sql'
+}
 
+# Total Data Output Files
+TOTAL_DATA_FILES = {
+    'buyer': 'buyers_total.json',
+    'seller': 'sellers_total.json'
+}
 
 # Query Parameters - Default Values
 DEFAULT_PARAMS = {
     'buyer': {
-        'start_date': (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d'),
+        'start_date': (datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d'),
         'end_date': datetime.now().strftime('%Y-%m-%d'),
         'top_n': 10
     },
     'seller': {
+        'start_date': (datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d'),
+        'end_date': datetime.now().strftime('%Y-%m-%d'),
+        'top_n': 20
+    }
+}
+
+
+# ============================================================================
+# TOTAL DATA PARAMETERS (for baseline/historical data)
+# ============================================================================
+
+TOTAL_DATA_PARAMS = {
+    'buyer': {
         'start_date': (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d'),
         'end_date': datetime.now().strftime('%Y-%m-%d'),
-        'top_n': 20,
-        'time_resolution': 'day'
-    }
-}
-
-# Query Definitions
-QUERY_DEFINITIONS = {
-    'buyer': {
-        'overview_metrics': {
-            'file': 'overview_metrics.sql',
-            'params': ['start_date', 'end_date'],
-            'description': 'Period-over-period comparison of buyer metrics'
-        },
-        'top_products': {
-            'file': 'top_products.sql',
-            'params': ['start_date', 'end_date', 'top_n'],
-            'description': 'Top products by purchase amount'
-        },
-        'top_suppliers': {
-            'file': 'top_suppliers.sql',
-            'params': ['start_date', 'end_date', 'top_n'],
-            'description': 'Top suppliers by purchase amount'
-        },
-        'top_categories': {
-            'file': 'top_categories.sql',
-            'params': ['start_date', 'end_date', 'top_n'],
-            'description': 'Top categories by purchase amount'
-        }
+        'top_n': 20  # More items for comprehensive baseline
     },
     'seller': {
-        'performance_overview': {
-            'file': 'performance_overview.sql',
-            'params': ['start_date', 'end_date'],
-            'description': 'Sales, customers, and repeat purchase metrics'
-        },
-        'monthly_trends': {
-            'file': 'monthly_trends.sql',
-            'params': ['start_date', 'end_date'],
-            'description': 'Month-over-month sales trends'
-        },
-        'quarterly_trends': {
-            'file': 'quarterly_trends.sql',
-            'params': ['start_date', 'end_date'],
-            'description': 'Quarter-over-quarter sales trends'
-        },
-        'product_line_breakdown': {
-            'file': 'product_line_breakdown.sql',
-            'params': ['start_date', 'end_date'],
-            'description': 'Revenue contribution by product category'
-        },
-        'sales_time_series': {
-            'file': 'sales_time_series.sql',
-            'params': ['start_date', 'end_date', 'time_resolution'],
-            'description': 'Sales by configurable time period (day/week/month)'
-        },
-        'top_selling_products': {
-            'file': 'top_selling_products.sql',
-            'params': ['start_date', 'end_date', 'top_n'],
-            'description': 'Top selling products by revenue'
-        },
-        'regional_distribution': {
-            'file': 'regional_distribution.sql',
-            'params': ['start_date', 'end_date'],
-            'description': 'Sales distribution by geographic region'
-        },
-        'order_analysis': {
-            'file': 'order_analysis.sql',
-            'params': ['start_date', 'end_date'],
-            'description': 'Order value vs quantity analysis'
-        }
+        'start_date': (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d'),
+        'end_date': datetime.now().strftime('%Y-%m-%d'),
+        'top_n': 30,  # More items for comprehensive baseline
+        'time_resolution': 'month'
     }
 }
 
-# Insights Generation Settings
-MAX_INSIGHTS_PER_ENTITY = 5
+
+
+# ============================================================================
+# INSIGHTS GENERATION SETTINGS
+# ============================================================================
+
+# Insights quantity control
+INSIGHTS_CONFIG = {
+    'buyer': {
+        'min_insights': 5,
+        'max_insights': 7,
+        'target_insights': 6  # What we ask LLM to aim for
+    },
+    'seller': {
+        'min_insights': 5,
+        'max_insights': 7,
+        'target_insights': 6
+    }
+}
+
+# Valid priority levels
 INSIGHT_PRIORITY_LEVELS = ['high', 'medium', 'low']
+
+# Valid comparison types (for new benchmarking system)
+COMPARISON_TYPES = ['self', 'benchmark', 'both']
+
+# Deviation thresholds for priority assignment (used in prompts)
+PRIORITY_THRESHOLDS = {
+    'high': {
+        'self_deviation': 30,      # % change from own historical
+        'benchmark_deviation': 50   # % difference from platform average
+    },
+    'medium': {
+        'self_deviation': 15,
+        'benchmark_deviation': 25
+    }
+    # Low priority: everything below medium
+}
+
+# LLM parameters
+LLM_CONFIG = {
+    'temperature': 0.3,
+    'max_tokens': 2000,
+    'response_format': 'json'  # Future: OpenAI structured outputs
+}
+
+
+
+AGGREGATE_PERCENTILES = [25, 50, 75, 90]
+
+# Insight validation rules
+INSIGHT_VALIDATION = {
+    'require_title': True,
+    'require_observation': True,
+    'require_recommendation': True,
+    'require_priority': True,
+    'require_comparison_type': True,
+    'min_title_length': 10,
+    'min_observation_length': 20,
+    'min_recommendation_length': 20,
+    'max_title_length': 100,
+    'max_metrics_per_insight': 5
+}
