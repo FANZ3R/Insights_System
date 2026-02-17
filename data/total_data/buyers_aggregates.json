@@ -1,0 +1,54 @@
+{
+  "entity_type": "buyer",
+  "generated_at": "2026-02-14T14:02:57.127877",
+  "baseline_period": {
+    "start_date": "2025-02-14",
+    "end_date": "2026-02-14",
+    "top_n": 20
+  },
+  "total_entities": 46,
+  "queries_executed": [
+    "overview_metrics",
+    "top_products",
+    "top_suppliers",
+    "top_categories"
+  ],
+  "aggregates": {
+    "total_count": 46,
+    "avg_period_spend": 75587593.19274998,
+    "avg_period_quantity": 22434.665384615382,
+    "avg_suppliers": 0,
+    "avg_items_purchased": 0,
+    "median_period_spend": 837698.625,
+    "median_period_quantity": 692.0,
+    "median_suppliers": 0,
+    "std_period_spend": 349232535.57407993,
+    "std_period_quantity": 96152.35468684857,
+    "percentiles": {
+      "p25": {
+        "spend": 104745.0,
+        "quantity": 225.0,
+        "suppliers": 0,
+        "items": 0
+      },
+      "p50": {
+        "spend": 837698.625,
+        "quantity": 692.0,
+        "suppliers": 0,
+        "items": 0
+      },
+      "p75": {
+        "spend": 15458694.452499999,
+        "quantity": 4523.0,
+        "suppliers": 0,
+        "items": 0
+      },
+      "p90": {
+        "spend": 59329479.59100002,
+        "quantity": 18529.0,
+        "suppliers": 0,
+        "items": 0
+      }
+    }
+  }
+}

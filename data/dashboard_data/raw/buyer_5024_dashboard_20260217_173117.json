@@ -1,0 +1,226 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 5024,
+  "execution_timestamp": "2026-02-17T17:31:16.796495",
+  "parameters": {
+    "start_date": "2025-11-19",
+    "end_date": "2026-02-17",
+    "top_n": 10
+  },
+  "queries": {
+    "overview_metrics": {
+      "description": "Period-over-period comparison of buyer metrics",
+      "result_count": 1,
+      "data": [
+        {
+          "buyer_org_id": 5024,
+          "current_period_purchases": 18518080.890000004,
+          "previous_period_purchases": 10463273.5,
+          "purchase_percentage_change": "76.98",
+          "current_period_quantity": 19945.0,
+          "previous_period_quantity": 24400.8,
+          "quantity_percentage_change": "-18.26",
+          "avg_purchase_per_supplier_current": "3703616.18",
+          "avg_purchase_per_supplier_previous": "2092654.70",
+          "avg_purchase_per_supplier_percentage_change": "76.98",
+          "avg_price_per_unit_current": "928.46",
+          "avg_price_per_unit_previous": "428.81",
+          "avg_price_per_unit_percentage_change": "116.52",
+          "items_purchased_current": 18,
+          "items_purchased_previous": 25,
+          "items_purchased_percentage_change": "-28.00",
+          "new_items_purchased_current": 13,
+          "new_items_purchased_previous": 20,
+          "suppliers_current": 5,
+          "suppliers_previous": 5,
+          "suppliers_percentage_change": "0.00",
+          "new_suppliers_current": 3,
+          "new_suppliers_previous": 3
+        }
+      ]
+    },
+    "top_products": {
+      "description": "Top products by purchase amount",
+      "result_count": 10,
+      "data": [
+        {
+          "buyer_org_id": 5024,
+          "product_id": 71444,
+          "product_name": "Boiler Water Chemicals",
+          "total_purchase_amount": 3978440.62,
+          "rank_within_buyer": 1
+        },
+        {
+          "buyer_org_id": 5024,
+          "product_id": 71445,
+          "product_name": "Boiler Water Chemicals",
+          "total_purchase_amount": 3427969.05,
+          "rank_within_buyer": 2
+        },
+        {
+          "buyer_org_id": 5024,
+          "product_id": 641,
+          "product_name": "Addison Taps & Drill",
+          "total_purchase_amount": 2655000.0,
+          "rank_within_buyer": 3
+        },
+        {
+          "buyer_org_id": 5024,
+          "product_id": 70935,
+          "product_name": "Ac Power Cords AC-C13 AU",
+          "total_purchase_amount": 1606800.0,
+          "rank_within_buyer": 4
+        },
+        {
+          "buyer_org_id": 5024,
+          "product_id": 0,
+          "product_name": null,
+          "total_purchase_amount": 1367998.95,
+          "rank_within_buyer": 5
+        },
+        {
+          "buyer_org_id": 5024,
+          "product_id": 71057,
+          "product_name": "Tarsons Markers",
+          "total_purchase_amount": 1140000.0,
+          "rank_within_buyer": 6
+        },
+        {
+          "buyer_org_id": 5024,
+          "product_id": 70885,
+          "product_name": "Tarsons Markers",
+          "total_purchase_amount": 990000.0,
+          "rank_within_buyer": 7
+        },
+        {
+          "buyer_org_id": 5024,
+          "product_id": 70936,
+          "product_name": "Ac Power Cords AC-C13 AU",
+          "total_purchase_amount": 945000.0,
+          "rank_within_buyer": 8
+        },
+        {
+          "buyer_org_id": 5024,
+          "product_id": 70947,
+          "product_name": "Memcor Membranes",
+          "total_purchase_amount": 738100.0,
+          "rank_within_buyer": 9
+        },
+        {
+          "buyer_org_id": 5024,
+          "product_id": 3669,
+          "product_name": "Schaeffler Axial Spherical Roller Bearing [29332-E1-XL]",
+          "total_purchase_amount": 661500.0,
+          "rank_within_buyer": 10
+        }
+      ]
+    },
+    "top_suppliers": {
+      "description": "Top suppliers by purchase amount",
+      "result_count": 5,
+      "data": [
+        {
+          "buyer_org_id": 5024,
+          "seller_org_id": 91,
+          "company_name": "A one Precision Tools Center",
+          "total_purchase_amount": 8858995.07,
+          "rank_within_buyer": 1
+        },
+        {
+          "buyer_org_id": 5024,
+          "seller_org_id": 509,
+          "company_name": "Tarsons Products Limited",
+          "total_purchase_amount": 7828110.82,
+          "rank_within_buyer": 2
+        },
+        {
+          "buyer_org_id": 5024,
+          "seller_org_id": 931,
+          "company_name": "Retail/E-commerce Business",
+          "total_purchase_amount": 1606800.0,
+          "rank_within_buyer": 3
+        },
+        {
+          "buyer_org_id": 5024,
+          "seller_org_id": 536,
+          "company_name": "sandeepkumar s",
+          "total_purchase_amount": 210000.0,
+          "rank_within_buyer": 4
+        },
+        {
+          "buyer_org_id": 5024,
+          "seller_org_id": 7,
+          "company_name": "B G Tronics Pvt. Ltd.",
+          "total_purchase_amount": 14175.0,
+          "rank_within_buyer": 5
+        }
+      ]
+    },
+    "top_categories": {
+      "description": "Top categories by purchase amount",
+      "result_count": 10,
+      "data": [
+        {
+          "buyer_org_id": 5024,
+          "category": "Water treatment and supply equipment",
+          "total_purchase_amount": 8144509.67,
+          "rank_within_buyer": 1
+        },
+        {
+          "buyer_org_id": 5024,
+          "category": "Metal cutting tools",
+          "total_purchase_amount": 2655000.0,
+          "rank_within_buyer": 2
+        },
+        {
+          "buyer_org_id": 5024,
+          "category": "Cable accessories",
+          "total_purchase_amount": 2551800.0,
+          "rank_within_buyer": 3
+        },
+        {
+          "buyer_org_id": 5024,
+          "category": "Waste containers and accessories",
+          "total_purchase_amount": 2130000.0,
+          "rank_within_buyer": 4
+        },
+        {
+          "buyer_org_id": 5024,
+          "category": "Cryosurgery equipment or accessories",
+          "total_purchase_amount": 483358.1,
+          "rank_within_buyer": 5
+        },
+        {
+          "buyer_org_id": 5024,
+          "category": "Gear box housings",
+          "total_purchase_amount": 210000.0,
+          "rank_within_buyer": 6
+        },
+        {
+          "buyer_org_id": 5024,
+          "category": "General laboratory storage containers and cabinets",
+          "total_purchase_amount": 124453.67000000001,
+          "rank_within_buyer": 7
+        },
+        {
+          "buyer_org_id": 5024,
+          "category": "Bare copper electrical cable",
+          "total_purchase_amount": 94500.0,
+          "rank_within_buyer": 8
+        },
+        {
+          "buyer_org_id": 5024,
+          "category": "Nuts or dried fruits",
+          "total_purchase_amount": 46055.5,
+          "rank_within_buyer": 9
+        },
+        {
+          "buyer_org_id": 5024,
+          "category": "Cable joint",
+          "total_purchase_amount": 34730.0,
+          "rank_within_buyer": 10
+        }
+      ]
+    }
+  }
+}

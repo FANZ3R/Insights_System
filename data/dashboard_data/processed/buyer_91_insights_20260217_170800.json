@@ -1,0 +1,90 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 91,
+  "generated_at": "2026-02-17T17:08:00.100228",
+  "dashboard_period": {
+    "start_date": "2025-11-19",
+    "end_date": "2026-02-17",
+    "top_n": 10
+  },
+  "insights": [
+    {
+      "title": "Significant Drop in Supplier Count",
+      "observation": "Your supplier count has decreased from 10 to 1 compared to your historical average of 10 suppliers.",
+      "recommendation": "Consider diversifying your supplier base to mitigate risks associated with reliance on a single supplier.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "suppliers_current",
+        "suppliers_previous",
+        "suppliers_average"
+      ]
+    },
+    {
+      "title": "High Average Purchase per Supplier",
+      "observation": "Your average purchase per supplier ($13,526,609) is significantly higher than the industry median ($531,780).",
+      "recommendation": "Evaluate your purchasing strategy to ensure it aligns with industry norms and consider negotiating better terms with multiple suppliers.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "avg_purchase_per_supplier_current",
+        "median_period_spend"
+      ]
+    },
+    {
+      "title": "Decrease in Quantity Purchased",
+      "observation": "Your quantity purchased has decreased by 20.32% compared to your historical average increase of 158.26%.",
+      "recommendation": "Investigate the reasons for this decline and consider adjusting your purchasing strategy to meet demand.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "current_period_quantity",
+        "previous_period_quantity",
+        "quantity_percentage_change"
+      ]
+    },
+    {
+      "title": "High Price per Unit Compared to Historical Data",
+      "observation": "Your average price per unit has increased by 41.14% compared to your historical average increase of 1313.71%.",
+      "recommendation": "Review your pricing agreements and explore alternative suppliers to reduce costs.",
+      "priority": "medium",
+      "comparison_type": "both",
+      "metrics": [
+        "avg_price_per_unit_current",
+        "avg_price_per_unit_previous"
+      ]
+    },
+    {
+      "title": "Low Spending Compared to Industry Average",
+      "observation": "Your current period purchases ($13,526,609) are below the industry average ($65,728,040).",
+      "recommendation": "Consider increasing your procurement activities to align more closely with industry standards.",
+      "priority": "medium",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "current_period_purchases",
+        "avg_period_spend"
+      ]
+    },
+    {
+      "title": "Dramatic Shift in Product Categories",
+      "observation": "You've shifted your purchases heavily towards water treatment and supply equipment, which now represents a small fraction of your historical purchasing categories.",
+      "recommendation": "Analyze the market demand for these categories and ensure they align with your overall procurement strategy.",
+      "priority": "low",
+      "comparison_type": "self",
+      "metrics": [
+        "top_categories_current",
+        "top_categories_previous"
+      ]
+    }
+  ],
+  "insights_count": 6,
+  "high_priority_count": 2,
+  "comparison_types": {
+    "self": 3,
+    "benchmark": 2,
+    "both": 1
+  },
+  "source_dashboard_file": "/home/user/PROJECT/Vendor_AI_Insights/Insights_system/data/dashboard_data/raw/buyer_91_dashboard_20260217_170746.json",
+  "total_data_version": null,
+  "has_historical_data": true
+}

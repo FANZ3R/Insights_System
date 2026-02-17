@@ -1,0 +1,87 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 5024,
+  "generated_at": "2026-02-17T17:31:36.437557",
+  "dashboard_period": {
+    "start_date": "2025-11-19",
+    "end_date": "2026-02-17",
+    "top_n": 10
+  },
+  "insights": [
+    {
+      "title": "Significant Increase in Spending",
+      "observation": "Your spending increased by 76.98% compared to the previous period, which is a notable jump.",
+      "recommendation": "Review the reasons behind this increase to ensure it aligns with your procurement strategy.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "current_period_purchases",
+        "previous_period_purchases"
+      ]
+    },
+    {
+      "title": "Decreased Quantity Ordered",
+      "observation": "Your quantity ordered has decreased by 18.26% compared to the previous period.",
+      "recommendation": "Investigate the reasons for the drop in quantity to ensure it does not affect supply continuity.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "current_period_quantity",
+        "previous_period_quantity"
+      ]
+    },
+    {
+      "title": "High Average Price per Unit",
+      "observation": "Your average price per unit ($928.46) is significantly higher than the industry median ($531.78).",
+      "recommendation": "Explore opportunities to negotiate better pricing with suppliers or consider alternative suppliers.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "avg_price_per_unit_current",
+        "median_period_spend"
+      ]
+    },
+    {
+      "title": "Supplier Count Consistency",
+      "observation": "Your supplier count remains stable at 5, which is above the industry median of 1.",
+      "recommendation": "Maintain this level of supplier diversity to mitigate risk and ensure competitive pricing.",
+      "priority": "low",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "suppliers_current"
+      ]
+    },
+    {
+      "title": "Reduced Item Variety",
+      "observation": "You've purchased 28% fewer items compared to the previous period, indicating reduced variety.",
+      "recommendation": "Consider expanding your item selection to avoid supply chain risks and enhance procurement flexibility.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "items_purchased_current",
+        "items_purchased_previous"
+      ]
+    },
+    {
+      "title": "Increased Spending per Supplier",
+      "observation": "Your average purchase per supplier has increased by 76.98%, indicating a higher concentration of spending.",
+      "recommendation": "Assess whether this concentration is strategic or if it poses a risk to your supply chain.",
+      "priority": "medium",
+      "comparison_type": "both",
+      "metrics": [
+        "avg_purchase_per_supplier_current",
+        "avg_purchase_per_supplier_previous"
+      ]
+    }
+  ],
+  "insights_count": 6,
+  "high_priority_count": 2,
+  "comparison_types": {
+    "self": 3,
+    "benchmark": 2,
+    "both": 1
+  },
+  "source_dashboard_file": "/home/user/PROJECT/Vendor_AI_Insights/Insights_system/data/dashboard_data/raw/buyer_5024_dashboard_20260217_173117.json",
+  "total_data_version": null,
+  "has_historical_data": true
+}

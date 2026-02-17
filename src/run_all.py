@@ -1,7 +1,7 @@
 """
 Complete Dashboard Pipeline Runner
 Executes dashboard queries and generates benchmarked insights
-(Does NOT populate total data - run populate_total_data.py separately)
+(Does NOT populate total data - run sync_to_duckdb.py separately)
 """
 
 import argparse
@@ -35,22 +35,40 @@ class DashboardPipeline:
         print(f"{'-'*70}\n")
     
     def verify_total_data_exists(self, entity_type):
-        """Check if total data file exists"""
-        filename = config.TOTAL_DATA_FILES[entity_type]
-        filepath = Path(config.TOTAL_DATA_DIR) / filename
+        """Check if DuckDB analytics database exists and has data"""
+        import duckdb
         
-        if not filepath.exists():
+        db_path = config.ANALYTICS_DB_PATH
+        
+        if not Path(db_path).exists():
             print(f"\n{'='*70}")
-            print(f"  ⚠ WARNING: Total Data Not Found")
+            print(f"  WARNING: Analytics Database Not Found")
             print(f"{'='*70}")
-            print(f"\nMissing file: {filepath}")
-            print(f"\nYou need to populate total data first by running:")
-            print(f"  python src/populate_total_data.py")
-            print(f"\nThis creates the baseline data for benchmarking.")
+            print(f"Missing: {db_path}")
+            print(f"Run: python src/sync_to_duckdb.py")
             print(f"{'='*70}\n")
             return False
         
-        return True
+        try:
+            conn = duckdb.connect(db_path)
+            id_col = config.ENTITY_ID_COLUMNS[entity_type]
+            count = conn.execute(
+                "SELECT COUNT(*) FROM entities WHERE entity_type = ?",
+                [entity_type]
+            ).fetchone()[0]
+            conn.close()
+            
+            if count == 0:
+                print(f"WARNING: No {entity_type} data in analytics DB")
+                print(f"Run: python src/sync_to_duckdb.py")
+                return False
+            
+            print(f"✓ Analytics DB found ({count} {entity_type}s)")
+            return True
+        
+        except Exception as e:
+            print(f"WARNING: Error accessing analytics DB: {e}")
+            return False
     
     def run_for_single_entity(self, entity_type, entity_id, params=None):
         """Run complete pipeline for single entity"""

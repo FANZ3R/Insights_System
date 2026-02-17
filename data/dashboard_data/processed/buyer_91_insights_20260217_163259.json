@@ -1,0 +1,92 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 91,
+  "generated_at": "2026-02-17T16:32:59.504661",
+  "dashboard_period": {
+    "start_date": "2025-11-19",
+    "end_date": "2026-02-17",
+    "top_n": 10
+  },
+  "insights": [
+    {
+      "title": "Significant Decrease in Supplier Diversity",
+      "observation": "Supplier count dropped from 10 to 1 compared to your historical average of 10, indicating a significant reduction in supplier diversity.",
+      "recommendation": "Consider diversifying your supplier base to mitigate risks associated with reliance on a single supplier.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "suppliers_current",
+        "suppliers_previous",
+        "suppliers_percentage_change"
+      ]
+    },
+    {
+      "title": "High Average Purchase Per Supplier",
+      "observation": "Your average purchase per supplier ($13,526,609.38) is significantly higher than the industry median ($531,780.99), indicating a high concentration of spending.",
+      "recommendation": "Evaluate the potential risks associated with high spending on a limited number of suppliers and seek to balance your procurement strategy.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "avg_purchase_per_supplier_current",
+        "median_period_spend"
+      ]
+    },
+    {
+      "title": "Decline in Quantity Purchased",
+      "observation": "Current period quantity purchased (5,160) is 20.32% lower than the previous period (6,476), indicating a downward trend in procurement volume.",
+      "recommendation": "Investigate the reasons for the decline in quantity and consider strategies to increase order volume.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "current_period_quantity",
+        "previous_period_quantity",
+        "quantity_percentage_change"
+      ]
+    },
+    {
+      "title": "Increased Average Price Per Unit",
+      "observation": "Your average price per unit ($2,621.44) has increased by 41.14% compared to the previous period ($1,857.35), indicating rising costs.",
+      "recommendation": "Explore cost-saving measures or negotiate better pricing with suppliers to manage rising costs.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "avg_price_per_unit_current",
+        "avg_price_per_unit_previous",
+        "avg_price_per_unit_percentage_change"
+      ]
+    },
+    {
+      "title": "Low Spending Compared to Industry Average",
+      "observation": "Your current period purchases ($13,526,609.38) are below the industry average ($65,728,040.24), indicating lower spending relative to peers.",
+      "recommendation": "Consider increasing your procurement activities to align more closely with industry standards.",
+      "priority": "medium",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "current_period_purchases",
+        "avg_period_spend"
+      ]
+    },
+    {
+      "title": "Dramatic Shift in Product Categories",
+      "observation": "You've shifted from a diverse range of categories to focusing primarily on a single category, with significant drops in items purchased from previous periods.",
+      "recommendation": "Reassess your procurement strategy to ensure a balanced approach across multiple categories to avoid over-reliance on a single category.",
+      "priority": "medium",
+      "comparison_type": "both",
+      "metrics": [
+        "items_purchased_current",
+        "items_purchased_previous",
+        "items_purchased_percentage_change"
+      ]
+    }
+  ],
+  "insights_count": 6,
+  "high_priority_count": 2,
+  "comparison_types": {
+    "self": 3,
+    "benchmark": 2,
+    "both": 1
+  },
+  "source_dashboard_file": "/home/user/PROJECT/Vendor_AI_Insights/Insights_system/data/dashboard_data/raw/buyer_91_dashboard_20260217_163228.json",
+  "total_data_version": null,
+  "has_historical_data": true
+}

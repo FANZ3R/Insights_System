@@ -1,0 +1,88 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 91,
+  "generated_at": "2026-02-17T17:28:09.249550",
+  "dashboard_period": {
+    "start_date": "2025-11-19",
+    "end_date": "2026-02-17",
+    "top_n": 10
+  },
+  "insights": [
+    {
+      "title": "Significant Drop in Supplier Diversity",
+      "observation": "Your supplier count decreased from 10 to 1, which is a 90% drop compared to your historical average.",
+      "recommendation": "Consider diversifying your supplier base to mitigate risks associated with reliance on a single supplier.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "suppliers_current",
+        "suppliers_previous"
+      ]
+    },
+    {
+      "title": "Current Spending Below Industry Median",
+      "observation": "Your current period purchases ($13,526,609) are below the industry median ($531,780.99), indicating lower spending compared to typical buyers.",
+      "recommendation": "Evaluate your procurement strategy to identify areas for increased spending or investment.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "current_period_purchases",
+        "median_period_spend"
+      ]
+    },
+    {
+      "title": "Increased Average Price per Unit",
+      "observation": "Your average price per unit increased by 41.14% compared to the previous period, while the industry average has not shown such volatility.",
+      "recommendation": "Investigate the reasons for this price increase and explore alternative suppliers or products to manage costs.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "avg_price_per_unit_current",
+        "avg_price_per_unit_previous"
+      ]
+    },
+    {
+      "title": "Dramatic Decrease in New Supplier Engagement",
+      "observation": "You purchased from only 1 new supplier this period compared to 9 in your historical data, a 88.89% decrease.",
+      "recommendation": "Focus on onboarding new suppliers to enhance competition and pricing options.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "new_suppliers_current",
+        "new_suppliers_previous"
+      ]
+    },
+    {
+      "title": "High Concentration in Purchases from a Single Supplier",
+      "observation": "Your total purchases from 'A one Precision Tools Center' account for 100% of your current spending, indicating a high concentration risk.",
+      "recommendation": "Diversify your supplier base to reduce dependency on a single supplier and mitigate supply chain risks.",
+      "priority": "high",
+      "comparison_type": "both",
+      "metrics": [
+        "total_purchase_amount",
+        "suppliers_current"
+      ]
+    },
+    {
+      "title": "Decreased Item Variety Purchased",
+      "observation": "You purchased only 7 items this period compared to 21 items historically, a 66.67% decrease.",
+      "recommendation": "Explore opportunities to expand your product range to meet diverse needs and enhance procurement efficiency.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "items_purchased_current",
+        "items_purchased_previous"
+      ]
+    }
+  ],
+  "insights_count": 6,
+  "high_priority_count": 4,
+  "comparison_types": {
+    "self": 4,
+    "benchmark": 1,
+    "both": 1
+  },
+  "source_dashboard_file": "/home/user/PROJECT/Vendor_AI_Insights/Insights_system/data/dashboard_data/raw/buyer_91_dashboard_20260217_172758.json",
+  "total_data_version": null,
+  "has_historical_data": true
+}

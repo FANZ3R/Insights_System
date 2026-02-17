@@ -9,6 +9,7 @@ from datetime import datetime
 from pathlib import Path
 from openai import OpenAI
 import config
+import sqlite3
 
 class BenchmarkingInsightsGenerator:
     def __init__(self, api_key=None):
@@ -17,6 +18,79 @@ class BenchmarkingInsightsGenerator:
             base_url=config.OPENROUTER_BASE_URL,
             api_key=self.api_key
         )
+        
+        self._aggregates_cache ={}
+        
+    def get_sqlite_path(self, entity_type):
+        """Get SQLite database path"""
+        filename = config.TOTAL_DATA_DB_FILES[entity_type]
+        return os.path.join(config.TOTAL_DATA_DIR, filename)
+        
+    def get_aggregates_path(self, entity_type):
+        """Get aggregates JSON path"""
+        filename = config.AGGREGATES_FILES[entity_type]
+        return os.path.join(config.TOTAL_DATA_DIR, filename)
+    
+    def load_entity_from_duckdb(self, entity_type, entity_id):
+        """Loads all queries dynamically - no hardcoding"""
+        import duckdb
+        
+        conn = duckdb.connect(config.ANALYTICS_DB_PATH)
+        
+        result = conn.execute("""
+        SELECT queries_data FROM entities 
+        WHERE entity_id = ? AND entity_type = ?
+        """, [entity_id, entity_type]).fetchone()
+        
+        conn.close()
+        
+        if not result:
+            raise ValueError(f"No data found for {entity_type} {entity_id}")
+        
+        data = json.loads(result[0])
+        
+        # Log what queries are available - useful for debugging!
+        available_queries = list(data.keys())
+        print(f"✓ Loaded {len(available_queries)} queries: {available_queries}")
+        
+        return data
+    
+    
+    def load_aggregates_from_duckdb(self, entity_type):
+        """Load aggregates from DuckDB - replaces JSON files"""
+        import duckdb
+        
+        # Cache per session
+        if entity_type in self._aggregates_cache:
+            print(f"✓ Loaded aggregates from cache")
+            return self._aggregates_cache[entity_type]
+        
+        print(f"Loading platform aggregates from DuckDB...")
+        
+        conn = duckdb.connect(config.ANALYTICS_DB_PATH)
+        
+        result = conn.execute("""
+        SELECT aggregates_data FROM aggregates 
+        WHERE entity_type = ?
+        """, [entity_type]).fetchone()
+        
+        conn.close()
+        
+        if not result:
+            raise ValueError(f"No aggregates found for {entity_type}")
+        
+        aggregates = json.loads(result[0])
+        self._aggregates_cache[entity_type] = aggregates
+        
+        count = aggregates.get('total_count', 0)
+        print(f"✓ Loaded platform aggregates ({count} {entity_type}s)")
+        
+        return aggregates
+    
+    
+    
+    
+    
     
     def load_total_data(self, entity_type):
         """Load complete total data file"""
@@ -59,6 +133,12 @@ BUYER'S LIFETIME/HISTORICAL DATA:
 INDUSTRY BENCHMARKS (All Buyers):
 {json.dumps(aggregates, indent=2)}
 
+IMPORTANT - Available Benchmark Metrics:
+- avg_period_spend: Mean (average) - sensitive to outliers
+- median_period_spend: Median (50th percentile) - ROBUST, use this for "typical" comparisons
+- std_period_spend: Standard deviation - use to identify if entity is an outlier
+- percentiles: p25 (bottom quartile), p50 (median), p75 (top quartile), p90 (top 10%)
+
 Provide {target} insights in the following JSON format:
 {{
   "insights": [
@@ -84,10 +164,17 @@ Focus on THREE types of comparisons:
 
 2. BENCHMARK COMPARISON (comparison_type: "benchmark"):
    - Current performance vs industry/platform averages
+   - Compare against MEDIAN (not just average) for more accurate industry comparison
+   - Use STANDARD DEVIATION to identify outliers (>2 std dev = significant outlier)
+   - Use PERCENTILES to show ranking position
    - Examples:
      * "Your avg order value ($500) is 40% below platform average ($850)"
      * "Your supplier count (5) is in the bottom 20% percentile"
      * "Your spending per supplier is 2x the industry norm"
+     * "Your spending ($500k) is below industry median ($532k) but above average ($850k), indicating a few high spenders skew the market"
+     * "Your supplier count (1) is 2.1 standard deviations below the mean (3.7 ± 1.3), making you an outlier"
+     * "You're at the 15th percentile for spending (below p25), significantly below typical buyers"
+     * "Your price volatility (std: $500) is 2x the industry average (std: $250)"
 
 3. COMBINED INSIGHTS (comparison_type: "both"):
    - When both comparisons tell an interesting story
@@ -148,6 +235,16 @@ SELLER'S LIFETIME/HISTORICAL DATA:
 INDUSTRY BENCHMARKS (All Sellers):
 {json.dumps(aggregates, indent=2)}
 
+
+IMPORTANT - Available Benchmark Metrics (Note: "spend" fields contain sales/revenue data for sellers):
+- avg_period_spend: Mean sales revenue (average) - sensitive to outliers
+- median_period_spend: Median sales revenue (50th percentile) - ROBUST, use this for "typical" comparisons
+- std_period_spend: Sales revenue standard deviation - use to identify if entity is an outlier
+- avg_suppliers: Mean buyer count (in seller context, this is number of buyers)
+- median_suppliers: Median buyer count
+- percentiles: p25 (bottom quartile), p50 (median), p75 (top quartile), p90 (top 10%)
+
+
 Provide {target} insights in the following JSON format:
 {{
   "insights": [
@@ -173,10 +270,19 @@ Focus on THREE types of comparisons:
 
 2. BENCHMARK COMPARISON (comparison_type: "benchmark"):
    - Current performance vs industry/platform averages
+   - Compare against MEDIAN (not just average) for more accurate industry comparison
+   - Use STANDARD DEVIATION to identify outliers (>2 std dev = significant outlier)
+   - Use PERCENTILES to show ranking position
    - Examples:
      * "Your repeat purchase rate (25%) is below platform average (35%)"
      * "Your AOV ($450) is in the top 10% of all sellers"
      * "Your customer count is 50% below industry median"
+     * "Your revenue ($2.3M) exceeds industry median ($1.8M) but is below average ($3.5M), indicating top sellers significantly outperform"
+     * "Your buyer count (25) is 1.8 standard deviations above the mean (12.5 ± 6.8), showing strong market reach"
+     * "You're at the 85th percentile for revenue (above p75), placing you in the top 15% of sellers"
+     * "Your monthly sales volatility (std: $450k) is 50% lower than industry average (std: $900k), indicating stable performance"
+     * "Your repeat purchase rate (62%) is at the median, but top quartile sellers (p75: 78%) achieve 25% higher retention"
+     * "Your average order value ($1,850) is below both median ($2,100) and average ($2,450), suggesting opportunity to upsell"
 
 3. COMBINED INSIGHTS (comparison_type: "both"):
    - When both comparisons tell an interesting story
@@ -283,6 +389,95 @@ Respond ONLY with valid JSON, no additional text.
         
         return True
     
+    # def generate_insights(self, dashboard_raw_filepath):
+    #     """Generate insights by comparing dashboard vs total data"""
+    #     print(f"\n{'='*60}")
+    #     print(f"Generating Benchmarked Insights")
+    #     print(f"{'='*60}")
+    #     print(f"Processing: {dashboard_raw_filepath}")
+        
+    #     # Load dashboard data
+    #     dashboard_data = self.load_dashboard_raw(dashboard_raw_filepath)
+    #     entity_type = dashboard_data['entity_type']
+    #     entity_id = dashboard_data['entity_id']
+        
+    #     print(f"\nEntity: {entity_type.upper()} {entity_id}")
+    #     print(f"Dashboard Period: {dashboard_data['parameters']['start_date']} to {dashboard_data['parameters']['end_date']}")
+        
+    #     # Load total data
+    #     print(f"\nLoading total data for {entity_type}s...")
+    #     total_data = self.load_total_data(entity_type)
+    #     entity_total = self.get_entity_from_total(total_data, entity_id)
+    #     aggregates = total_data.get('aggregates', {})
+        
+    #     if not entity_total:
+    #         print(f"⚠ Warning: No historical data found for {entity_type} {entity_id}")
+    #         print(f"   Insights will be limited to current period analysis only")
+    #         entity_total = {}
+    #     else:
+    #         print(f"✓ Found historical data for {entity_type} {entity_id}")
+        
+    #     print(f"✓ Loaded platform aggregates ({aggregates.get('total_count', 0)} {entity_type}s)")
+        
+    #     # Format data for LLM
+    #     formatted_dashboard = {
+    #         'parameters': dashboard_data['parameters'],
+    #         'queries': dashboard_data['queries']
+    #     }
+        
+    #     # Generate insights based on entity type
+    #     print(f"\nGenerating insights with LLM...")
+    #     if entity_type == 'buyer':
+    #         insights = self.generate_buyer_insights(formatted_dashboard, entity_total, aggregates)
+    #     else:  # seller
+    #         insights = self.generate_seller_insights(formatted_dashboard, entity_total, aggregates)
+        
+    #     print(f"✓ Generated {len(insights)} insights")
+        
+    #     # Count comparison types
+    #     comparison_counts = {
+    #         'self': len([i for i in insights if i.get('comparison_type') == 'self']),
+    #         'benchmark': len([i for i in insights if i.get('comparison_type') == 'benchmark']),
+    #         'both': len([i for i in insights if i.get('comparison_type') == 'both'])
+    #     }
+        
+    #     print(f"\nInsight breakdown:")
+    #     print(f"  Self-comparison: {comparison_counts['self']}")
+    #     print(f"  Benchmark comparison: {comparison_counts['benchmark']}")
+    #     print(f"  Combined: {comparison_counts['both']}")
+        
+    #     priority_counts = {
+    #         'high': len([i for i in insights if i.get('priority') == 'high']),
+    #         'medium': len([i for i in insights if i.get('priority') == 'medium']),
+    #         'low': len([i for i in insights if i.get('priority') == 'low'])
+    #     }
+        
+    #     print(f"\nPriority breakdown:")
+    #     print(f"  High: {priority_counts['high']}")
+    #     print(f"  Medium: {priority_counts['medium']}")
+    #     print(f"  Low: {priority_counts['low']}")
+        
+    #     # Create processed output
+    #     processed = {
+    #         'entity_type': entity_type,
+    #         'entity_id': entity_id,
+    #         'generated_at': datetime.now().isoformat(),
+    #         'dashboard_period': dashboard_data['parameters'],
+    #         'insights': insights,
+    #         'insights_count': len(insights),
+    #         'high_priority_count': priority_counts['high'],
+    #         'comparison_types': comparison_counts,
+    #         'source_dashboard_file': dashboard_raw_filepath,
+    #         'total_data_version': total_data.get('generated_at'),
+    #         'has_historical_data': entity_total is not None and len(entity_total) > 0
+    #     }
+        
+    #     # Save
+    #     output_filepath = self.save_insights(entity_type, entity_id, processed)
+        
+    #     return output_filepath
+    
+    
     def generate_insights(self, dashboard_raw_filepath):
         """Generate insights by comparing dashboard vs total data"""
         print(f"\n{'='*60}")
@@ -298,18 +493,21 @@ Respond ONLY with valid JSON, no additional text.
         print(f"\nEntity: {entity_type.upper()} {entity_id}")
         print(f"Dashboard Period: {dashboard_data['parameters']['start_date']} to {dashboard_data['parameters']['end_date']}")
         
-        # Load total data
-        print(f"\nLoading total data for {entity_type}s...")
-        total_data = self.load_total_data(entity_type)
-        entity_total = self.get_entity_from_total(total_data, entity_id)
-        aggregates = total_data.get('aggregates', {})
+        # Load entity's historical data from SQLite DATABASE (FAST!)
+        print(f"\nLoading historical data for {entity_type} {entity_id} from DuckDB...")
+        entity_total = self.load_entity_from_duckdb(entity_type, entity_id)
         
         if not entity_total:
             print(f"⚠ Warning: No historical data found for {entity_type} {entity_id}")
             print(f"   Insights will be limited to current period analysis only")
             entity_total = {}
         else:
-            print(f"✓ Found historical data for {entity_type} {entity_id}")
+            print(f"✓ Loaded historical data ({len(entity_total)} queries)")
+        
+        # Load platform aggregates (cached after first load)
+        print(f"Loading platform aggregates...")
+        aggregates_data = self.load_aggregates_from_duckdb(entity_type)
+        aggregates = aggregates_data
         
         print(f"✓ Loaded platform aggregates ({aggregates.get('total_count', 0)} {entity_type}s)")
         
@@ -362,7 +560,7 @@ Respond ONLY with valid JSON, no additional text.
             'high_priority_count': priority_counts['high'],
             'comparison_types': comparison_counts,
             'source_dashboard_file': dashboard_raw_filepath,
-            'total_data_version': total_data.get('generated_at'),
+            'total_data_version': aggregates_data.get('generated_at'),
             'has_historical_data': entity_total is not None and len(entity_total) > 0
         }
         
@@ -370,6 +568,7 @@ Respond ONLY with valid JSON, no additional text.
         output_filepath = self.save_insights(entity_type, entity_id, processed)
         
         return output_filepath
+    
     
     def save_insights(self, entity_type, entity_id, processed_data):
         """Save processed insights to JSON file"""

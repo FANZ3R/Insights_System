@@ -1,0 +1,59 @@
+{
+  "entity_type": "seller",
+  "generated_at": "2026-02-14T14:03:05.977067",
+  "baseline_period": {
+    "start_date": "2025-02-14",
+    "end_date": "2026-02-14",
+    "top_n": 30,
+    "time_resolution": "month"
+  },
+  "total_entities": 71,
+  "queries_executed": [
+    "performance_overview",
+    "monthly_trends",
+    "quarterly_trends",
+    "product_line_breakdown",
+    "sales_time_series",
+    "top_selling_products",
+    "regional_distribution",
+    "order_analysis"
+  ],
+  "aggregates": {
+    "total_count": 71,
+    "avg_period_spend": 46540450.26633803,
+    "avg_period_quantity": 0,
+    "avg_suppliers": 2.085714285714286,
+    "avg_items_purchased": 0,
+    "median_period_spend": 370791.0,
+    "median_period_quantity": 0,
+    "median_suppliers": 1.0,
+    "std_period_spend": 228426266.90243876,
+    "std_period_quantity": 0,
+    "percentiles": {
+      "p25": {
+        "spend": 58821.82,
+        "quantity": 0,
+        "suppliers": 1.0,
+        "items": 0
+      },
+      "p50": {
+        "spend": 370791.0,
+        "quantity": 0,
+        "suppliers": 1.0,
+        "items": 0
+      },
+      "p75": {
+        "spend": 1440163.8,
+        "quantity": 0,
+        "suppliers": 1.0,
+        "items": 0
+      },
+      "p90": {
+        "spend": 10608481.25,
+        "quantity": 0,
+        "suppliers": 3.1000000000000014,
+        "items": 0
+      }
+    }
+  }
+}

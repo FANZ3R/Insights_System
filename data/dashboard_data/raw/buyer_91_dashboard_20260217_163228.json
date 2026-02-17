@@ -1,0 +1,123 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 91,
+  "execution_timestamp": "2026-02-17T16:32:27.008737",
+  "parameters": {
+    "start_date": "2025-11-19",
+    "end_date": "2026-02-17",
+    "top_n": 10
+  },
+  "queries": {
+    "overview_metrics": {
+      "description": "Period-over-period comparison of buyer metrics",
+      "result_count": 1,
+      "data": [
+        {
+          "buyer_org_id": 91,
+          "current_period_purchases": 13526609.38,
+          "previous_period_purchases": 12028181.979999999,
+          "purchase_percentage_change": "12.46",
+          "current_period_quantity": 5160.0,
+          "previous_period_quantity": 6476.0,
+          "quantity_percentage_change": "-20.32",
+          "avg_purchase_per_supplier_current": "13526609.38",
+          "avg_purchase_per_supplier_previous": "1718311.71",
+          "avg_purchase_per_supplier_percentage_change": "687.20",
+          "avg_price_per_unit_current": "2621.44",
+          "avg_price_per_unit_previous": "1857.35",
+          "avg_price_per_unit_percentage_change": "41.14",
+          "items_purchased_current": 7,
+          "items_purchased_previous": 13,
+          "items_purchased_percentage_change": "-46.15",
+          "new_items_purchased_current": 1,
+          "new_items_purchased_previous": 11,
+          "suppliers_current": 1,
+          "suppliers_previous": 7,
+          "suppliers_percentage_change": "-85.71",
+          "new_suppliers_current": 1,
+          "new_suppliers_previous": 5
+        }
+      ]
+    },
+    "top_products": {
+      "description": "Top products by purchase amount",
+      "result_count": 7,
+      "data": [
+        {
+          "buyer_org_id": 91,
+          "product_id": 70671,
+          "product_name": "Tarsons All Clear Desiccator Vacuum 300.0",
+          "total_purchase_amount": 8750000.0,
+          "rank_within_buyer": 1
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 70669,
+          "product_name": "Tarsons All Clear Desiccator Vacuum 200.0",
+          "total_purchase_amount": 3125000.0,
+          "rank_within_buyer": 2
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 70581,
+          "product_name": "Tarsons 0\u00b0C Mini Cooler 20",
+          "total_purchase_amount": 1125000.0,
+          "rank_within_buyer": 3
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 70946,
+          "product_name": "Almond House Almond Butter",
+          "total_purchase_amount": 500000.0,
+          "rank_within_buyer": 4
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 70673,
+          "product_name": "Tarsons Buchner Funnel 110.0",
+          "total_purchase_amount": 15000.0,
+          "rank_within_buyer": 5
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 71444,
+          "product_name": "Boiler Water Chemicals",
+          "total_purchase_amount": 11609.38,
+          "rank_within_buyer": 6
+        },
+        {
+          "buyer_org_id": 91,
+          "product_id": 71293,
+          "product_name": "Accent Drive Shaft",
+          "total_purchase_amount": 0.0,
+          "rank_within_buyer": 7
+        }
+      ]
+    },
+    "top_suppliers": {
+      "description": "Top suppliers by purchase amount",
+      "result_count": 1,
+      "data": [
+        {
+          "buyer_org_id": 91,
+          "seller_org_id": 91,
+          "company_name": "A one Precision Tools Center",
+          "total_purchase_amount": 13526609.38,
+          "rank_within_buyer": 1
+        }
+      ]
+    },
+    "top_categories": {
+      "description": "Top categories by purchase amount",
+      "result_count": 1,
+      "data": [
+        {
+          "buyer_org_id": 91,
+          "category": "Water treatment and supply equipment",
+          "total_purchase_amount": 11609.38,
+          "rank_within_buyer": 1
+        }
+      ]
+    }
+  }
+}

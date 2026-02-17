@@ -18,7 +18,11 @@ else:
     print(f" Warning: .env file not found at {env_path}")
 
 
-# Database Configuration
+# ============================================================================
+# DATABASE CONFIGURATION
+# ============================================================================
+
+# PostgreSQL (production - source of truth)
 DB_CONFIG = {
     'host': os.getenv('DB_HOST'),
     'database': os.getenv('DB_NAME'),
@@ -27,43 +31,101 @@ DB_CONFIG = {
     'port': os.getenv('DB_PORT')
 }
 
-# OpenRouter API Configuration
+# ============================================================================
+# DUCKDB ANALYTICS DATABASE
+# ============================================================================
+ANALYTICS_DIR = os.path.join(str(BASE_DIR), 'data', 'analytics')
+ANALYTICS_DB_PATH = os.path.join(ANALYTICS_DIR, 'vipani_analytics.db')
+
+os.makedirs(ANALYTICS_DIR, exist_ok=True)
+
+# Entity ID columns in your PostgreSQL/DuckDB table
+ENTITY_ID_COLUMNS = {
+    'buyer': 'buyer_org_id',   # ← Change if your column name differs
+    'seller': 'vendor_id'      # ← Change if your column name differs
+}
+
+# Baseline period for historical comparison (days)
+BASELINE_DAYS = 365
+
+# Sync configuration (PostgreSQL → DuckDB)
+SYNC_CONFIG = {
+    'batch_size': 10000,
+    'log_path': os.path.join(str(BASE_DIR), 'cron', 'cron_logs', 'sync.log'),
+    'incremental_column': 'updated_at'  # ← Column used to detect new rows
+}
+
+# ============================================================================
+# LLM CONFIGURATION
+# ============================================================================
+
 OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY')
 OPENROUTER_BASE_URL = 'https://openrouter.ai/api/v1'
-DEFAULT_MODEL = 'openai/gpt-oss-120b'  # ← CORRECTED
+DEFAULT_MODEL = 'openai/gpt-4o-mini'
 
-# Directory Paths 
-QUERIES_DIR = os.path.join(BASE_DIR, 'queries')
+LLM_CONFIG = {
+    'temperature': 0.3,
+    'max_tokens': 1500,
+    'response_format': 'json'
+}
 
-# Query subdirectories
-TOTAL_QUERIES_DIR = os.path.join(QUERIES_DIR, 'total_queries')
+# ============================================================================
+# DIRECTORY PATHS
+# ============================================================================
+
+QUERIES_DIR = os.path.join(str(BASE_DIR), 'queries')
 DASHBOARD_QUERIES_DIR = os.path.join(QUERIES_DIR, 'dashboard_specific')
 
-# Data directories
-DATA_DIR = os.path.join(BASE_DIR, 'data')
-TOTAL_DATA_DIR = os.path.join(DATA_DIR, 'total_data')
+DATA_DIR = os.path.join(str(BASE_DIR), 'data')
 DASHBOARD_DATA_DIR = os.path.join(DATA_DIR, 'dashboard_data')
 DASHBOARD_RAW_DIR = os.path.join(DASHBOARD_DATA_DIR, 'raw')
 DASHBOARD_PROCESSED_DIR = os.path.join(DASHBOARD_DATA_DIR, 'processed')
 
-# Query Files
-TOTAL_QUERY_FILES = {
-    'buyer': 'buyer_total_queries.sql',
-    'seller': 'seller_total_queries.sql'
-}
+# ============================================================================
+# QUERY FILES (Dashboard only - total queries replaced by DuckDB)
+# ============================================================================
 
 DASHBOARD_QUERY_FILES = {
     'buyer': 'buyer_dashboard_queries.sql',
     'seller': 'seller_dashboard_queries.sql'
 }
 
-# Total Data Output Files
-TOTAL_DATA_FILES = {
-    'buyer': 'buyers_total.json',
-    'seller': 'sellers_total.json'
+
+
+# ADD BACK - needed for sync_to_duckdb.py
+TOTAL_QUERIES_DIR = os.path.join(QUERIES_DIR, 'total_queries')
+
+TOTAL_QUERY_FILES = {
+    'buyer': 'buyer_total_queries.sql',
+    'seller': 'seller_total_queries.sql'
 }
 
-# Query Parameters - Default Values
+TOTAL_DATA_PARAMS = {
+    'buyer': {
+        'start_date': (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d'),
+        'end_date': datetime.now().strftime('%Y-%m-%d'),
+        'top_n': 20
+    },
+    'seller': {
+        'start_date': (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d'),
+        'end_date': datetime.now().strftime('%Y-%m-%d'),
+        'top_n': 30,
+        'time_resolution': 'month'
+    }
+}
+
+
+
+
+
+
+
+
+
+# ============================================================================
+# QUERY PARAMETERS
+# ============================================================================
+
 DEFAULT_PARAMS = {
     'buyer': {
         'start_date': (datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d'),
@@ -77,37 +139,15 @@ DEFAULT_PARAMS = {
     }
 }
 
-
-# ============================================================================
-# TOTAL DATA PARAMETERS (for baseline/historical data)
-# ============================================================================
-
-TOTAL_DATA_PARAMS = {
-    'buyer': {
-        'start_date': (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d'),
-        'end_date': datetime.now().strftime('%Y-%m-%d'),
-        'top_n': 20  # More items for comprehensive baseline
-    },
-    'seller': {
-        'start_date': (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d'),
-        'end_date': datetime.now().strftime('%Y-%m-%d'),
-        'top_n': 30,  # More items for comprehensive baseline
-        'time_resolution': 'month'
-    }
-}
-
-
-
 # ============================================================================
 # INSIGHTS GENERATION SETTINGS
 # ============================================================================
 
-# Insights quantity control
 INSIGHTS_CONFIG = {
     'buyer': {
         'min_insights': 5,
         'max_insights': 7,
-        'target_insights': 6  # What we ask LLM to aim for
+        'target_insights': 6
     },
     'seller': {
         'min_insights': 5,
@@ -116,37 +156,24 @@ INSIGHTS_CONFIG = {
     }
 }
 
-# Valid priority levels
 INSIGHT_PRIORITY_LEVELS = ['high', 'medium', 'low']
-
-# Valid comparison types (for new benchmarking system)
 COMPARISON_TYPES = ['self', 'benchmark', 'both']
 
-# Deviation thresholds for priority assignment (used in prompts)
 PRIORITY_THRESHOLDS = {
     'high': {
-        'self_deviation': 30,      # % change from own historical
-        'benchmark_deviation': 50   # % difference from platform average
+        'self_deviation': 30,
+        'benchmark_deviation': 50
     },
     'medium': {
         'self_deviation': 15,
         'benchmark_deviation': 25
     }
-    # Low priority: everything below medium
 }
 
-# LLM parameters
-LLM_CONFIG = {
-    'temperature': 0.3,
-    'max_tokens': 2000,
-    'response_format': 'json'  # Future: OpenAI structured outputs
-}
+# ============================================================================
+# INSIGHT VALIDATION
+# ============================================================================
 
-
-
-AGGREGATE_PERCENTILES = [25, 50, 75, 90]
-
-# Insight validation rules
 INSIGHT_VALIDATION = {
     'require_title': True,
     'require_observation': True,
@@ -158,4 +185,118 @@ INSIGHT_VALIDATION = {
     'min_recommendation_length': 20,
     'max_title_length': 100,
     'max_metrics_per_insight': 5
+}
+
+
+
+
+
+
+# Actual column names from your SQL queries
+SPEND_COLUMNS = {
+    'buyer': 'current_period_purchases',
+    'seller': 'total_sales'
+}
+
+COUNTERPARTY_COLUMNS = {
+    'buyer': 'suppliers_current',
+    'seller': 'total_buyers'
+}
+
+
+
+# ============================================================================
+# QUERY REGISTRY - Add new queries here, nowhere else!
+# ============================================================================
+
+QUERY_REGISTRY = {
+    'buyer': {
+        # overview_query: which query has the entity ID and main metrics
+        'overview_query': 'overview_metrics',
+        'entity_id_col': 'buyer_org_id',
+        'spend_col': 'current_period_purchases',
+        'counterparty_col': 'suppliers_current',
+        
+        # All queries and what they contain
+        # Add new queries here when you create them!
+        'queries': {
+            'overview_metrics': {
+                'description': 'Period-over-period buyer metrics',
+                'entity_id_col': 'buyer_org_id',
+                'type': 'overview'
+            },
+            'top_products': {
+                'description': 'Top products by spend',
+                'entity_id_col': 'buyer_org_id',
+                'type': 'ranking'
+            },
+            'top_suppliers': {
+                'description': 'Top suppliers by spend',
+                'entity_id_col': 'buyer_org_id',
+                'type': 'ranking'
+            },
+            'top_categories': {
+                'description': 'Top categories by spend',
+                'entity_id_col': 'buyer_org_id',
+                'type': 'ranking'
+            },
+            # When you add new queries to SQL file, just add here:
+            # 'monthly_trends': {
+            #     'description': 'Monthly spend trends',
+            #     'entity_id_col': 'buyer_org_id',
+            #     'type': 'time_series'
+            # },
+        }
+    },
+    
+    'seller': {
+        'overview_query': 'performance_overview',
+        'entity_id_col': 'vendor_id',
+        'spend_col': 'total_sales',
+        'counterparty_col': 'total_buyers',
+        
+        'queries': {
+            'performance_overview': {
+                'description': 'Sales and customer metrics',
+                'entity_id_col': 'vendor_id',
+                'type': 'overview'
+            },
+            'monthly_trends': {
+                'description': 'Monthly sales trends',
+                'entity_id_col': 'vendor_id',
+                'type': 'time_series'
+            },
+            'quarterly_trends': {
+                'description': 'Quarterly sales trends',
+                'entity_id_col': 'vendor_id',
+                'type': 'time_series'
+            },
+            'product_line_breakdown': {
+                'description': 'Revenue by product line',
+                'entity_id_col': 'vendor_id',
+                'type': 'breakdown'
+            },
+            'sales_time_series': {
+                'description': 'Daily/weekly sales series',
+                'entity_id_col': 'vendor_id',
+                'type': 'time_series'
+            },
+            'top_selling_products': {
+                'description': 'Top products by revenue',
+                'entity_id_col': 'vendor_id',
+                'type': 'ranking'
+            },
+            'regional_distribution': {
+                'description': 'Sales by region',
+                'entity_id_col': 'vendor_id',
+                'type': 'distribution'
+            },
+            'order_analysis': {
+                'description': 'Order patterns and sizes',
+                'entity_id_col': 'vendor_id',
+                'type': 'analysis'
+            },
+            # Add new seller queries here when you create them!
+        }
+    }
 }

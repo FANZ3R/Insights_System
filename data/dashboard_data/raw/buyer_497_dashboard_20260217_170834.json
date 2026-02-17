@@ -1,0 +1,32 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 497,
+  "execution_timestamp": "2026-02-17T17:08:33.302220",
+  "parameters": {
+    "start_date": "2025-11-19",
+    "end_date": "2026-02-17",
+    "top_n": 10
+  },
+  "queries": {
+    "overview_metrics": {
+      "description": "Period-over-period comparison of buyer metrics",
+      "result_count": 0,
+      "data": []
+    },
+    "top_products": {
+      "description": "Top products by purchase amount",
+      "result_count": 0,
+      "data": []
+    },
+    "top_suppliers": {
+      "description": "Top suppliers by purchase amount",
+      "result_count": 0,
+      "data": []
+    },
+    "top_categories": {
+      "description": "Top categories by purchase amount",
+      "result_count": 0,
+      "data": []
+    }
+  }
+}

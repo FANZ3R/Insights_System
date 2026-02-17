@@ -1,0 +1,88 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 497,
+  "generated_at": "2026-02-17T17:08:44.221350",
+  "dashboard_period": {
+    "start_date": "2025-11-19",
+    "end_date": "2026-02-17",
+    "top_n": 10
+  },
+  "insights": [
+    {
+      "title": "Complete Drop in Purchases",
+      "observation": "Your current period purchases are $0, a 100% decrease compared to $28,116,634.78 in the previous period.",
+      "recommendation": "Investigate the reasons for the complete halt in purchasing activities and re-establish procurement processes.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "current_period_purchases",
+        "previous_period_purchases"
+      ]
+    },
+    {
+      "title": "Supplier Count at Zero",
+      "observation": "You have no active suppliers in the current period, down from 3 in the previous period.",
+      "recommendation": "Reassess your supplier relationships and consider onboarding new suppliers to diversify your procurement base.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "suppliers_current",
+        "suppliers_previous"
+      ]
+    },
+    {
+      "title": "Spending Significantly Below Industry Median",
+      "observation": "Your current spending of $0 is significantly below the industry median of $531,780.99.",
+      "recommendation": "Aim to re-engage in procurement activities to align with industry spending norms.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "current_period_purchases",
+        "median_period_spend"
+      ]
+    },
+    {
+      "title": "Zero Purchases vs Industry Activity",
+      "observation": "Your total purchases are $0, while the average period spend in the industry is $65,728,040.24.",
+      "recommendation": "Consider strategies to resume purchasing to avoid falling further behind industry standards.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "current_period_purchases",
+        "avg_period_spend"
+      ]
+    },
+    {
+      "title": "No New Items Purchased",
+      "observation": "You have not purchased any new items in the current period, compared to 5 in the previous period.",
+      "recommendation": "Explore new product opportunities to enhance your procurement portfolio.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "new_items_purchased_current",
+        "new_items_purchased_previous"
+      ]
+    },
+    {
+      "title": "Supplier Diversity Risk",
+      "observation": "You have no new suppliers compared to 3 in the previous period, indicating a risk in supplier diversity.",
+      "recommendation": "Develop a strategy to engage new suppliers to mitigate risks associated with supplier concentration.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "new_suppliers_current",
+        "new_suppliers_previous"
+      ]
+    }
+  ],
+  "insights_count": 6,
+  "high_priority_count": 4,
+  "comparison_types": {
+    "self": 4,
+    "benchmark": 2,
+    "both": 0
+  },
+  "source_dashboard_file": "/home/user/PROJECT/Vendor_AI_Insights/Insights_system/data/dashboard_data/raw/buyer_497_dashboard_20260217_170834.json",
+  "total_data_version": null,
+  "has_historical_data": true
+}
