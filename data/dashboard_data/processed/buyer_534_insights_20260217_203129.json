@@ -1,0 +1,89 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 534,
+  "generated_at": "2026-02-17T20:31:29.241804",
+  "dashboard_period": {
+    "start_date": "2025-11-19",
+    "end_date": "2026-02-17",
+    "top_n": 10
+  },
+  "insights": [
+    {
+      "title": "Significant Increase in Spending",
+      "observation": "Your spending increased by 1462.08% compared to your historical average of $2220176752.54.",
+      "recommendation": "Review the reasons for this dramatic increase and assess if it aligns with your procurement strategy.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "current_period_purchases",
+        "previous_period_purchases"
+      ]
+    },
+    {
+      "title": "High Average Purchase per Supplier",
+      "observation": "Your average purchase per supplier ($231862856.24) is significantly higher than the industry median ($531780.99), indicating a concentration of spending.",
+      "recommendation": "Consider diversifying your supplier base to mitigate risk and enhance competition.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "avg_purchase_per_supplier_current",
+        "median_period_spend"
+      ]
+    },
+    {
+      "title": "Supplier Count Growth",
+      "observation": "You have increased your supplier count from 3 to 6, which is a 100% increase compared to your historical average of 7.",
+      "recommendation": "Continue to explore new supplier relationships to maintain diversity and reduce risk.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "suppliers_current",
+        "suppliers_previous"
+      ]
+    },
+    {
+      "title": "Price per Unit Increase",
+      "observation": "Your average price per unit ($4933.11) has increased by 136.55% compared to your historical average of $3676.13, while the industry average only increased by 34.4%.",
+      "recommendation": "Investigate the reasons for this price increase and explore negotiation opportunities with suppliers.",
+      "priority": "high",
+      "comparison_type": "both",
+      "metrics": [
+        "avg_price_per_unit_current",
+        "avg_price_per_unit_previous"
+      ]
+    },
+    {
+      "title": "Items Purchased Decrease",
+      "observation": "You purchased 17 items in the current period, which is a 5.56% decrease compared to your historical average of 33 items.",
+      "recommendation": "Analyze the categories of items purchased to understand the decline and identify any potential gaps in procurement.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "items_purchased_current",
+        "items_purchased_previous"
+      ]
+    },
+    {
+      "title": "Spending Below Industry Median",
+      "observation": "Your spending in the current period ($1391177137.44) is above the industry median ($531780.99) but below the industry average ($65728040.24), indicating a potential for growth.",
+      "recommendation": "Focus on increasing your procurement volume to align more closely with industry averages.",
+      "priority": "medium",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "current_period_purchases",
+        "median_period_spend",
+        "avg_period_spend"
+      ]
+    }
+  ],
+  "insights_count": 6,
+  "high_priority_count": 3,
+  "comparison_types": {
+    "self": 3,
+    "benchmark": 2,
+    "both": 1
+  },
+  "source_dashboard_file": "/home/user/PROJECT/Vendor_AI_Insights/Insights_system/data/dashboard_data/raw/buyer_534_dashboard_20260217_203106.json",
+  "total_data_version": null,
+  "has_historical_data": true
+}

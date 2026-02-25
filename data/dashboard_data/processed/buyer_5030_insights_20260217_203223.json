@@ -1,0 +1,85 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 5030,
+  "generated_at": "2026-02-17T20:32:23.547223",
+  "dashboard_period": {
+    "start_date": "2025-11-19",
+    "end_date": "2026-02-17",
+    "top_n": 10
+  },
+  "insights": [
+    {
+      "title": "Spending Pattern Analysis",
+      "observation": "Your current period purchases total $36,141.04, which is significantly below the industry median of $531,780.99.",
+      "recommendation": "Consider increasing your purchasing volume to align more closely with industry standards.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "current_period_purchases",
+        "median_period_spend"
+      ]
+    },
+    {
+      "title": "Supplier Count Concentration",
+      "observation": "You have only 1 supplier, which is below the industry average of 3.17 and places you in the bottom 25% percentile.",
+      "recommendation": "Diversify your supplier base to mitigate risk and ensure supply chain resilience.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "suppliers_current",
+        "avg_counterparties"
+      ]
+    },
+    {
+      "title": "Purchasing Efficiency",
+      "observation": "Your average price per unit is $69.5, which is not directly comparable due to lack of industry data but indicates a potential area for cost optimization.",
+      "recommendation": "Benchmark your pricing against similar products in the market to identify potential savings.",
+      "priority": "medium",
+      "comparison_type": "both",
+      "metrics": [
+        "avg_price_per_unit_current"
+      ]
+    },
+    {
+      "title": "Growth in Purchasing Activity",
+      "observation": "You have made purchases totaling $36,141.04 in the current period, a notable increase from a previous period where purchases were $0.",
+      "recommendation": "Continue to monitor purchasing trends and aim for consistent growth in procurement activities.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "current_period_purchases",
+        "previous_period_purchases"
+      ]
+    },
+    {
+      "title": "New Supplier Engagement",
+      "observation": "You have engaged 1 new supplier in the current period, which is a positive sign of expanding your procurement network.",
+      "recommendation": "Focus on building relationships with additional new suppliers to enhance competition and reduce costs.",
+      "priority": "low",
+      "comparison_type": "self",
+      "metrics": [
+        "new_suppliers_current"
+      ]
+    },
+    {
+      "title": "Category Spending Concentration",
+      "observation": "Your entire spending of $36,141.04 is concentrated in the category of Cryosurgery equipment or accessories.",
+      "recommendation": "Explore opportunities to diversify spending across other categories to reduce dependency on a single category.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "top_categories"
+      ]
+    }
+  ],
+  "insights_count": 6,
+  "high_priority_count": 2,
+  "comparison_types": {
+    "self": 3,
+    "benchmark": 2,
+    "both": 1
+  },
+  "source_dashboard_file": "/home/user/PROJECT/Vendor_AI_Insights/Insights_system/data/dashboard_data/raw/buyer_5030_dashboard_20260217_203209.json",
+  "total_data_version": null,
+  "has_historical_data": true
+}

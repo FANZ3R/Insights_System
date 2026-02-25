@@ -1,0 +1,88 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 5093,
+  "generated_at": "2026-02-18T11:55:02.141614",
+  "dashboard_period": {
+    "start_date": "2025-11-20",
+    "end_date": "2026-02-18",
+    "top_n": 10
+  },
+  "insights": [
+    {
+      "title": "Dramatic Drop in Purchases",
+      "observation": "Your current purchases are $0 compared to $759,000 in the previous period, indicating a 100% drop.",
+      "recommendation": "Investigate the reasons for the halt in purchases and re-engage with suppliers to resume procurement activities.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "current_period_purchases",
+        "previous_period_purchases"
+      ]
+    },
+    {
+      "title": "Supplier Count at Zero",
+      "observation": "You have no active suppliers in the current period, down from 1 in the previous period.",
+      "recommendation": "Consider diversifying your supplier base to mitigate risks associated with relying on a single supplier.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "suppliers_current",
+        "suppliers_previous"
+      ]
+    },
+    {
+      "title": "Spending Below Industry Median",
+      "observation": "Your spending of $0 is significantly below the industry median of $531,780.99.",
+      "recommendation": "Aim to align your procurement strategy to at least meet the median spending to remain competitive.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "current_period_purchases",
+        "median_period_spend"
+      ]
+    },
+    {
+      "title": "No Items Purchased",
+      "observation": "You purchased 0 items in the current period, while historically you purchased 1 item.",
+      "recommendation": "Reassess your procurement needs and engage with suppliers to identify necessary items.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "items_purchased_current",
+        "items_purchased_previous"
+      ]
+    },
+    {
+      "title": "Lack of New Suppliers",
+      "observation": "You have not engaged any new suppliers in the current period, compared to 1 in the previous period.",
+      "recommendation": "Explore opportunities to onboard new suppliers to enhance your procurement flexibility.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "new_suppliers_current",
+        "new_suppliers_previous"
+      ]
+    },
+    {
+      "title": "Supplier Engagement Risk",
+      "observation": "Your supplier count is at 0, which is below the industry average of 3.17 and the median of 1.",
+      "recommendation": "Actively seek to establish relationships with multiple suppliers to reduce procurement risk.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "suppliers_current",
+        "avg_counterparties"
+      ]
+    }
+  ],
+  "insights_count": 6,
+  "high_priority_count": 5,
+  "comparison_types": {
+    "self": 4,
+    "benchmark": 2,
+    "both": 0
+  },
+  "source_dashboard_file": "/home/user/PROJECT/Vendor_AI_Insights/Insights_system/data/dashboard_data/raw/buyer_5093_dashboard_20260218_115450.json",
+  "total_data_version": null,
+  "has_historical_data": true
+}

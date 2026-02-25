@@ -1,0 +1,58 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 5093,
+  "execution_timestamp": "2026-02-18T11:54:49.461156",
+  "parameters": {
+    "start_date": "2025-11-20",
+    "end_date": "2026-02-18",
+    "top_n": 10
+  },
+  "queries": {
+    "overview_metrics": {
+      "description": "Period-over-period comparison of buyer metrics",
+      "result_count": 1,
+      "data": [
+        {
+          "buyer_org_id": 5093,
+          "current_period_purchases": 0.0,
+          "previous_period_purchases": 759000.0,
+          "purchase_percentage_change": "-100.00",
+          "current_period_quantity": 0.0,
+          "previous_period_quantity": 230.0,
+          "quantity_percentage_change": "-100.00",
+          "avg_purchase_per_supplier_current": null,
+          "avg_purchase_per_supplier_previous": "759000.00",
+          "avg_purchase_per_supplier_percentage_change": null,
+          "avg_price_per_unit_current": null,
+          "avg_price_per_unit_previous": "3300.00",
+          "avg_price_per_unit_percentage_change": null,
+          "items_purchased_current": 0,
+          "items_purchased_previous": 1,
+          "items_purchased_percentage_change": "-100.00",
+          "new_items_purchased_current": 0,
+          "new_items_purchased_previous": 1,
+          "suppliers_current": 0,
+          "suppliers_previous": 1,
+          "suppliers_percentage_change": "-100.00",
+          "new_suppliers_current": 0,
+          "new_suppliers_previous": 1
+        }
+      ]
+    },
+    "top_products": {
+      "description": "Top products by purchase amount",
+      "result_count": 0,
+      "data": []
+    },
+    "top_suppliers": {
+      "description": "Top suppliers by purchase amount",
+      "result_count": 0,
+      "data": []
+    },
+    "top_categories": {
+      "description": "Top categories by purchase amount",
+      "result_count": 0,
+      "data": []
+    }
+  }
+}
