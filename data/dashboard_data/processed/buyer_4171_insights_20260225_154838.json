@@ -1,0 +1,87 @@
+{
+  "entity_type": "buyer",
+  "entity_id": 4171,
+  "generated_at": "2026-02-25T15:48:38.526070",
+  "dashboard_period": {
+    "start_date": "2025-11-27",
+    "end_date": "2026-02-25",
+    "top_n": 10
+  },
+  "insights": [
+    {
+      "title": "Significant Increase in Spending",
+      "observation": "Your current period purchases amount to $16,036,479.4, which is a substantial increase compared to your previous period of $0.",
+      "recommendation": "Monitor spending closely to ensure it aligns with budget expectations and operational needs.",
+      "priority": "high",
+      "comparison_type": "self",
+      "metrics": [
+        "current_period_purchases",
+        "previous_period_purchases"
+      ]
+    },
+    {
+      "title": "High Average Purchase per Supplier",
+      "observation": "Your average purchase per supplier is $3,207,295.88, which is significantly higher than the industry median of $531,780.99.",
+      "recommendation": "Consider diversifying your supplier base to mitigate risk and enhance competitive pricing.",
+      "priority": "high",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "avg_purchase_per_supplier_current",
+        "median_period_spend"
+      ]
+    },
+    {
+      "title": "Concentration of Suppliers",
+      "observation": "You have engaged with 5 suppliers, which is above the industry average of 3.17 but may indicate a risk of over-reliance on a few partners.",
+      "recommendation": "Evaluate opportunities to onboard additional suppliers to reduce dependency and enhance supply chain resilience.",
+      "priority": "medium",
+      "comparison_type": "benchmark",
+      "metrics": [
+        "suppliers_current",
+        "avg_counterparties"
+      ]
+    },
+    {
+      "title": "New Items Purchased",
+      "observation": "You purchased 5 new items in the current period, which is a positive sign of procurement growth compared to your historical data.",
+      "recommendation": "Continue to explore new products to enhance your procurement portfolio and meet evolving needs.",
+      "priority": "medium",
+      "comparison_type": "self",
+      "metrics": [
+        "new_items_purchased_current",
+        "new_items_purchased_previous"
+      ]
+    },
+    {
+      "title": "High Spending in Cooling Tower Category",
+      "observation": "Your top category, Cooling Tower, accounts for $14,554,600, which is a significant portion of your total spend.",
+      "recommendation": "Assess if this concentration aligns with your strategic objectives or if there are opportunities to optimize costs in this category.",
+      "priority": "medium",
+      "comparison_type": "both",
+      "metrics": [
+        "top_categories"
+      ]
+    },
+    {
+      "title": "Lack of Historical Data for Comparison",
+      "observation": "The absence of previous period data limits the ability to assess trends effectively.",
+      "recommendation": "Establish a consistent data collection process to facilitate future performance comparisons.",
+      "priority": "low",
+      "comparison_type": "self",
+      "metrics": [
+        "previous_period_purchases",
+        "previous_period_quantity"
+      ]
+    }
+  ],
+  "insights_count": 6,
+  "high_priority_count": 2,
+  "comparison_types": {
+    "self": 3,
+    "benchmark": 2,
+    "both": 1
+  },
+  "source_dashboard_file": "/home/user/PROJECT/Vendor_AI_Insights/Insights_system/data/dashboard_data/raw/buyer_4171_dashboard_20260225_154816.json",
+  "total_data_version": null,
+  "has_historical_data": true
+}
